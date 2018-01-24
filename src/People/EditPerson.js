@@ -3,7 +3,7 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 
 const EditPerson = (props) =>  (
   <Modal trigger={<Button color='teal'>Edit</Button>} basic size='small'>
-    <Header icon='archive' content='Archive Old Messages' />
+    <Header icon='write' content='Edit User' />
     <Header content={props.user.name}/>
     <Modal.Content>
       <p>Your inbox is getting full, would you like us to enable automatic archiving of old messages?</p>

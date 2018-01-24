@@ -12,7 +12,7 @@ class Header extends Component {
           <Link to={`/people`}>People</Link>
           <Link to={`/clients`}>Clients</Link>
           <Link to={`/projects`}>Projects</Link>
-          <Link to={`/link`}>Links</Link>
+          <Link to={`/practice`}>Practice</Link>
           <Link to={`/about`}>About</Link>
         </div>
     );

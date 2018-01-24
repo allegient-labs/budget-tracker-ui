@@ -57,20 +57,24 @@ class PeopleComponent extends Component {
     return (
       <div className="people">
       <CreatePerson/>
-      <Button color="red" onClick={this.showDeletes}>Remove A User</Button>
-      {this.state.users.map((user)=>{
+      <Button color="red" onClick={this.showDeletes}>Modify A User</Button>
+      {this.state.users.length?this.state.users.map((user)=>{
         return (
-          <div className="peopleParent" key = {user.id}>
+          <div className="peopleCard" key = {user.id}>
             <div className="info overflow-ellipsis">
               {user.id} - {user.name}
             </div>
             <div className="buttons">
-              <EditPerson user={user} func={this.clickUpdate.bind(this, user.id)}/>
-              {this.state.deletesShown?<DeletePerson user={user} func={this.clickDelete.bind(this, user.id)}/>:null}
+              {this.state.deletesShown?
+                <div className="buttons">
+                  <EditPerson user={user} func={this.clickUpdate.bind(this, user.id)}/>
+                  <DeletePerson user={user} func={this.clickDelete.bind(this, user.id)}/>
+                </div>
+                :null}
             </div>
           </div>
           )
-      })}
+      }):<h2>Retrieving users...</h2>}
       </div>
     );
   }

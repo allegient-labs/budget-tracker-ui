@@ -10,7 +10,7 @@ import AboutComponent from './About/AboutComponent'
 import PeopleComponent from './People/PeopleComponent'
 import ProjectsComponent from './Projects/ProjectsComponent'
 import ClientsComponent from './Clients/ClientsComponent'
-import LinkComponent from './Link/LinkComponent'
+import PracticeComponent from './Practice/PracticeComponent'
 import Header from './Header'
 
 class App extends Component {
@@ -30,7 +30,7 @@ class App extends Component {
             <Route exact path="/people" component={PeopleComponent}/>
             <Route exact path="/projects" component={ProjectsComponent}/>
             <Route exact path="/clients" component={ClientsComponent}/>
-            <Route exact path="/link" component={LinkComponent}/>            
+            <Route exact path="/practice" component={PracticeComponent}/>            
           </div>      
         </div>
       </Router>
