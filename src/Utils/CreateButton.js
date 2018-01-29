@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 
+
+//requires a thing prop, a createF prop, a thingName prop
 class CreatePerson extends React.Component {
   constructor(){
     super()
@@ -25,11 +27,11 @@ class CreatePerson extends React.Component {
 
   render(){
     return(
-    <Modal trigger={<Button color='green' onClick={this.handleOpen}>Add A Person</Button>}         
+    <Modal trigger={<Button color='green' onClick={this.handleOpen}>Add a {this.props.thingName}</Button>}         
       onClose={()=>this.setState({modalOpen:false})}
       open={this.state.modalOpen}
       basic size='small'>
-      <Header icon='add circle' content='Add Person' />
+      <Header icon='add circle' content={this.props.thingName}/>
       <Modal.Content>
       <Form>
         <label color="white">Name</label>

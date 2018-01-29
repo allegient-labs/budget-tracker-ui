@@ -5,8 +5,8 @@ class AboutComponent extends Component {
   render() {
     return (
       <div className="about">
-        <h1>Sample project about section header</h1>
-        <h3>ABOUT COMPONENT</h3>
+        <h2>About:</h2>
+        <h4>The aim of this project is to create a budget tracking web application for use internally and for use as a learning tool for those new to React</h4>
       </div>
     );
   }

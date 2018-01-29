@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 
-class CreatePerson extends React.Component {
+//requires a thing prop, an updateF prop, a message prop
+class EditPerson extends React.Component {
   constructor(){
     super()
     this.state = { 
@@ -12,7 +13,6 @@ class CreatePerson extends React.Component {
     this.handleOpen=this.handleOpen.bind(this)
     this.handleClose=this.handleClose.bind(this)
     this.changeHandler=this.changeHandler.bind(this)
-
   }
 
   handleOpen(){this.setState({ modalOpen: true })}
@@ -25,21 +25,22 @@ class CreatePerson extends React.Component {
 
   render(){
     return(
-    <Modal trigger={<Button color='green' onClick={this.handleOpen}>Add A Person</Button>}         
+    <Modal trigger={<Button color='teal' icon='write' onClick={this.handleOpen}></Button>}         
       onClose={()=>this.setState({modalOpen:false})}
       open={this.state.modalOpen}
       basic size='small'>
-      <Header icon='add circle' content='Add Person' />
+      <Header icon='write' content={`Edit ${this.props.thingName}`} />
+      <Header content={this.props.thing.name}/>
       <Modal.Content>
       <Form>
-        <label color="white">Name</label>
+        <label>Name</label>
         <Form.Field>
-          <input onChange={this.changeHandler} value={this.state.value} placeholder={"Insert Name"} />
+          <input onChange={this.changeHandler} value={this.state.value} placeholder={this.props.thing.name} />
         </Form.Field>
       </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={this.props.createF.bind(null, null, this.handleClose, {name:this.state.name})} type='submit' color='green' inverted>
+        <Button onClick={this.props.updateF.bind(null, this.props.thing._links.self, this.handleClose, {name:this.state.name})} type='submit' color='green' inverted>
           <Icon name='checkmark' /> Submit
         </Button>
         <Button onClick={this.handleClose} basic color='red' inverted>
@@ -51,4 +52,4 @@ class CreatePerson extends React.Component {
   }
 }
 
-export default CreatePerson
+export default EditPerson

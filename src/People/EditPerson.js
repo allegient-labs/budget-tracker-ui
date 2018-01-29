@@ -12,7 +12,6 @@ class EditPerson extends React.Component {
     this.handleOpen=this.handleOpen.bind(this)
     this.handleClose=this.handleClose.bind(this)
     this.changeHandler=this.changeHandler.bind(this)
-
   }
 
   handleOpen(){this.setState({ modalOpen: true })}

@@ -24,8 +24,8 @@ class PeopleComponent extends Component {
       nextURL:"",
       prevURL:"",
       modalOpen:false
-
     }
+    
     this.deletePerson = this.deletePerson.bind(this)
     this.updatePerson = this.updatePerson.bind(this)
     this.createPerson = this.createPerson.bind(this)
@@ -38,7 +38,6 @@ class PeopleComponent extends Component {
     this.getProjects = this.getProjects.bind(this)
     this.getAssignments = this.getAssignments.bind(this)
 
-    this.clickSubmit = this.clickSubmit.bind(this)
     this.showDeletes = this.showDeletes.bind(this)
 
     this.toPrevPage = this.toPrevPage.bind(this)
@@ -60,6 +59,7 @@ class PeopleComponent extends Component {
     const nav_url = url?url.href:API_URL+'/persons';
     axios.get(nav_url)
     .then((persons)=>{
+      console.log(persons)
       this.setState({
         totalPages: persons.data.page.totalPages, 
         currPageNo:persons.data.page.number, 
@@ -72,36 +72,32 @@ class PeopleComponent extends Component {
 
   getTimeoffs(){
     axios.get(API_URL+'/timeoffs')
-    .then((users)=>{this.setState({timeoffs: users.data})})    
+    .then((users)=>{this.setState({timeoffs: users.data._embedded})})    
   }
 
   getPractices(){
     axios.get(API_URL+'/practices')
-    .then((users)=>{this.setState({practices: users.data})})    
+    .then((users)=>{this.setState({practices: users.data._embedded})})    
   }
 
   getBudgets(){
     axios.get(API_URL+'/budgets')
-    .then((users)=>{this.setState({budgets: users.data})})    
+    .then((users)=>{this.setState({budgets: users.data._embedded})})    
   }
 
   getTimelogs(){
     axios.get(API_URL+'/timelogs')
-    .then((users)=>{this.setState({timelogs: users.data})})    
+    .then((users)=>{this.setState({timelogs: users.data._embedded})})    
   }
 
   getProjects(){
     axios.get(API_URL+'/projects')
-    .then((users)=>{this.setState({projects: users.data})})    
+    .then((users)=>{this.setState({projects: users.data._embedded})})    
   }
 
   getAssignments(){
     axios.get(API_URL+'/assignments')
-    .then((users)=>{this.setState({assignments: users.data})})    
-  }
-
-  clickSubmit(){
-    axios.post()
+    .then((users)=>{this.setState({assignments: users.data._embedded})})    
   }
 
   deletePerson(url, closeFunc){
@@ -149,28 +145,28 @@ class PeopleComponent extends Component {
   render() {
     return (
       <div className="people">
-      <CreatePerson createF={this.createPerson}/>
-      <Button color="red" onClick={this.showDeletes}>Modify A Person</Button>
-      {this.state.persons.length?this.state.persons.map((user, i)=>{
-        return (
-          <div className="peopleCard" key = {i}>
-            <div className="info">
-              {user.id} - {user.name}
+        <CreatePerson createF={this.createPerson}/>
+        <Button color="red" onClick={this.showDeletes}>Modify A Person</Button>
+        {this.state.persons.length?this.state.persons.map((user, i)=>{
+          return (
+            <div className="peopleCard" key = {i}>
+              <div className="info">
+                {user.id} - {user.name}
+              </div>
+              <div className="buttons">
+                {this.state.deletesShown?
+                  <div className="buttons">
+                    <EditPerson user={user} updateF={this.updatePerson}/>
+                    <DeletePerson user={user} deleteF={this.deletePerson}/>
+                  </div>
+                  :null}
+              </div>
             </div>
-            <div className="buttons">
-              {this.state.deletesShown?
-                <div className="buttons">
-                  <EditPerson user={user} updateF={this.updatePerson}/>
-                  <DeletePerson user={user} deleteF={this.deletePerson}/>
-                </div>
-                :null}
-            </div>
-          </div>
-          )
-      }):<h2>Retrieving users...</h2>}
-      {!!this.state.nextURL?<Button onClick={this.toNextPage}>Next Page</Button>:null}
-      {!!this.state.prevURL?<Button onClick={this.toPrevPage}>Previous Page</Button>:null}
-      <h1>Page: {this.state.currPageNo+1}/{this.state.totalPages}</h1>
+            )
+        }):<h2>Retrieving users...</h2>}
+        {!!this.state.nextURL?<Button onClick={this.toNextPage}>Next Page</Button>:null}
+        {!!this.state.prevURL?<Button onClick={this.toPrevPage}>Previous Page</Button>:null}
+        <h1>Page: {this.state.currPageNo+1}/{this.state.totalPages}</h1>
       </div>
     );
   }
