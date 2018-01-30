@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import axios from "axios"
 import { Button } from 'semantic-ui-react'
-import EditButton from '../Utils/EditButton'
 import CreateButton from './CreateButton'
 import DeleteButton from './DeleteButton'
-import {API_URL} from '../commonVars'
+import {API_URL} from '../../commonVars'
 
 //needs thingName prop: string, needs URL_Ext:string, needs
 class GenericCrudComponent extends Component {
@@ -61,7 +60,6 @@ class GenericCrudComponent extends Component {
   }
 
   toNextPage(){
-    console.log("next", this.state.nextURL)
     this.getThings(this.state.nextURL)
   }
 
@@ -96,7 +94,6 @@ class GenericCrudComponent extends Component {
   }
 
   render() {
-
     return (
       <div className="thing">
         <CreateButton thingName={this.props.thingName} createF={this.createThing}/>
@@ -105,12 +102,12 @@ class GenericCrudComponent extends Component {
           return (
             <div className="peopleCard" key = {i}>
               <div className="info">
-                {this.props.children?React.cloneElement(this.props.children, { thing: thing }):null}
+                {this.props.children?React.cloneElement(this.props.children[0], { thing: thing }):null}
               </div>
               <div className="buttons">
                 {this.state.deletesShown?
                   <div className="buttons">
-                    <EditButton thingName={this.props.thingName} thing={thing} updateF={this.updateThing}/>
+                    {this.props.children?React.cloneElement(this.props.children[1], { thingName: this.props.thingName, thing:thing, updateF:this.updateThing }):null}
                     <DeleteButton thingName={this.props.thingName} thing={thing} deleteF={this.deleteThing}/>
                   </div>
                   :null}

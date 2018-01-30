@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Practice.css'
 import GenericCrudComponent from '../Utils/GenericCrudComponent'
 import AssignmentCard from './AssignmentCard'
+import EditGenericCard from './EditGenericCard'
 
 class AssignmentsComponent extends Component {
   render() {
@@ -10,6 +11,7 @@ class AssignmentsComponent extends Component {
         <h1>ASSIGNMENTS</h1>
         <GenericCrudComponent thingName={'Assignment'} URL_Ext={'assignments'} inObjectExt={'assignments'}>
           <AssignmentCard/>
+          <EditGenericCard/>
         </GenericCrudComponent>      
       </div>
     );

@@ -3,7 +3,6 @@ import './Projects.css'
 
 class ProjectCard extends Component {
   render() {
-    console.log("project card props", this.props)
     return (
       <div className="projects">
         <div>Client: {this.props.thing.client}</div>

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 class AssignmentCard extends Component {
   render() {
-    console.log("assignment card props", this.props)
     return (
       <div className="assignments">
         <div>Allocation:{this.props.thing.allocation}</div>

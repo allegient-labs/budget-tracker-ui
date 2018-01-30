@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 
-class EditPerson extends React.Component {
+//requires a thing prop, an updateF prop, a message prop
+class EditGenericCard extends React.Component {
   constructor(){
     super()
     this.state = { 
@@ -28,18 +29,18 @@ class EditPerson extends React.Component {
       onClose={()=>this.setState({modalOpen:false})}
       open={this.state.modalOpen}
       basic size='small'>
-      <Header icon='write' content='Edit Person' />
-      <Header content={this.props.user.name}/>
+      <Header icon='write' content={`Edit ${this.props.thingName}`} />
+      <Header content={this.props.thing.name}/>
       <Modal.Content>
       <Form>
         <label>Name</label>
         <Form.Field>
-          <input onChange={this.changeHandler} value={this.state.value} placeholder={this.props.user.name} />
+          <input onChange={this.changeHandler} value={this.state.value} placeholder={this.props.thing.name} />
         </Form.Field>
       </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={this.props.updateF.bind(null, this.props.user._links.self, this.handleClose, {name:this.state.name})} type='submit' color='green' inverted>
+        <Button onClick={this.props.updateF.bind(null, this.props.thing._links.self, this.handleClose, {name:this.state.name})} type='submit' color='green' inverted>
           <Icon name='checkmark' /> Submit
         </Button>
         <Button onClick={this.handleClose} basic color='red' inverted>
@@ -51,4 +52,4 @@ class EditPerson extends React.Component {
   }
 }
 
-export default EditPerson
+export default EditGenericCard

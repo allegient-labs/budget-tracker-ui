@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 
 //requires a thing prop, an updateF prop, a message prop
-class EditPerson extends React.Component {
+class EditTimeoffsCard extends React.Component {
   constructor(){
     super()
     this.state = { 
@@ -12,14 +12,23 @@ class EditPerson extends React.Component {
 
     this.handleOpen=this.handleOpen.bind(this)
     this.handleClose=this.handleClose.bind(this)
-    this.changeHandler=this.changeHandler.bind(this)
+    this.changeNameHandler=this.changeNameHandler.bind(this)
+    this.changeStartDateHandler=this.changeStartDateHandler.bind(this)
+    this.changeEndDateHandler=this.changeEndDateHandler.bind(this)
+
   }
 
   handleOpen(){this.setState({ modalOpen: true })}
 
   handleClose(){this.setState({ modalOpen: false })}
 
-  changeHandler(evt){
+  changeNameHandler(evt){
+    this.setState({name:evt.target.value})
+  }
+  changeStartDateHandler(evt){
+    this.setState({name:evt.target.value})
+  }
+  changeEndDateHandler(evt){
     this.setState({name:evt.target.value})
   }
 
@@ -35,7 +44,15 @@ class EditPerson extends React.Component {
       <Form>
         <label>Name</label>
         <Form.Field>
-          <input onChange={this.changeHandler} value={this.state.value} placeholder={this.props.thing.name} />
+          <input onChange={this.changeNameHandler} value={this.state.value} placeholder={this.props.thing.name} />
+        </Form.Field>
+        <label>StartDate</label>
+        <Form.Field>
+          <input onChange={this.changeStartDateHandler} value={this.state.value} placeholder={this.props.thing.name} />
+        </Form.Field>
+        <label>EndDate</label>
+        <Form.Field>
+          <input onChange={this.changeEndDateHandler} value={this.state.value} placeholder={this.props.thing.name} />
         </Form.Field>
       </Form>
       </Modal.Content>
@@ -47,9 +64,11 @@ class EditPerson extends React.Component {
           <Icon name='remove' /> Cancel
         </Button>
       </Modal.Actions>
+      <div>Set PersonTimeoff</div>
+      <div>Set Person</div>
     </Modal>
     )
   }
 }
 
-export default EditPerson
+export default EditTimeoffsCard

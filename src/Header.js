@@ -1,25 +1,22 @@
 import React, { Component} from 'react';
 import logo from './DMI_Logo.svg';
-import {Link} from 'react-router-dom'
+import { NavLink, Link} from 'react-router-dom'
 
-class Header extends Component {
+class UtilityHeader extends Component {
+  constructor(){
+    super()
+  }
   render() {
     return (
         <div className="App-header">
-          <img src={logo} className="App-logo col-md-12" alt="logo" />
-
-          <h2>DMI Budget Tracker</h2>
-          <Link to={`/people`}>People</Link>
-          <Link to={`/timeoffs`}>Timeoffs</Link>
-          <Link to={`/practice`}>Practice</Link>
-          <Link to={`/budgets`}>Budgets</Link>
-          <Link to={`/timelogs`}>Timelogs</Link>
-          <Link to={`/projects`}>Projects</Link>
-          <Link to={`/assignments`}>Assignments</Link>          
-          <Link to={`/about`}>About</Link>
+          <NavLink to={`/persons`} activeClassName="active">Persons</NavLink>
+          <NavLink to={`/projects`} activeClassName="active">Timeoffs</NavLink>
+          <NavLink to={`/admin`} activeClassName="active">Admin</NavLink>
+          <NavLink to={`/stats`} activeClassName="active">Statistics</NavLink>
+          <NavLink to={`/about`} activeClassName="active">About</NavLink>
         </div>
     );
   }
 }
 
-export default Header;
+export default UtilityHeader;

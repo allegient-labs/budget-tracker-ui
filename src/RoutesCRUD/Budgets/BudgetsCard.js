@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 class ProjectCard extends Component {
   render() {
-    console.log("budgets card props", this.props)
     return (
       <div className="projects">
         <div>ActualAllocation: {this.props.thing.actualAllocation}</div>
