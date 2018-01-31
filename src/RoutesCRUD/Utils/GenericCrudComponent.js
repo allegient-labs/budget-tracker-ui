@@ -112,6 +112,7 @@ class GenericCrudComponent extends Component {
                   </div>
                   :null}
               </div>
+              <hr/>
             </div>
             )
         }):<h2>Retrieving {this.props.thingName}...</h2>}

@@ -6,7 +6,6 @@ import DeleteButton from '../RoutesCRUD/Utils/DeleteButton'
 import {API_URL} from '../commonVars'
 import EditPeopleCard from '../RoutesCRUD/People/EditPeopleCard'
 
-//needs thingName prop: string, needs URL_Ext:string
 class AdminManageUsersComponent extends Component {
   constructor(){
     super()
@@ -23,16 +22,12 @@ class AdminManageUsersComponent extends Component {
     this.deleteThing = this.deleteThing.bind(this)
     this.updateThing = this.updateThing.bind(this)
     this.createThing = this.createThing.bind(this)
-
     this.getThings = this.getThings.bind(this)
-
     this.showDeletes = this.showDeletes.bind(this)
     this.toPrevPage = this.toPrevPage.bind(this)
     this.toNextPage = this.toNextPage.bind(this)
-
     this.selectPerson = this.selectPerson.bind(this)
     this.unselectPerson = this.unselectPerson.bind(this)
-
   }
 
   getThings(url){
@@ -40,7 +35,6 @@ class AdminManageUsersComponent extends Component {
 
     axios.get(nav_url)
     .then((things)=>{    
-
       this.setState({
         totalPages: things.data.page.totalPages, 
         currPageNo:things.data.page.number, 
@@ -99,7 +93,6 @@ class AdminManageUsersComponent extends Component {
 
   selectPerson(thing){
     this.props.rerouteToSelectedUser(thing)
-    // this.setState({selectedPerson:thing})
   }
 
   unselectPerson(){
@@ -131,6 +124,7 @@ class AdminManageUsersComponent extends Component {
                       {this.state.deletesShown?<DeleteButton thingName="Person" thing={thing} deleteF={this.deleteThing}/>:null}
                     </div>
                 </div>
+                
               </div>
               )
           }):<h2>Retrieving {this.props.thingName}...</h2>}

@@ -21,10 +21,11 @@ import UtilityHeader from './UtilityHeader'
 import StatsComponent from './Stats/StatsComponent'
 import ProjectComponent from './Project/ProjectComponent'
 import AdminComponent from './Admin/AdminComponent'
-import AdminManageUsersContainer from './Admin/AdminManageUsersContainer'
-import AdminManageSingleUserContainer from './Admin/AdminManageSingleUserContainer'
-import AdminManageProjectsComponent from './Admin/AdminManageProjectsComponent'
-import AdminManageSingleProjectComponent from './Admin/AdminManageSingleProjectComponent'
+import AdminManageUsersContainer from './Admin/containers/AdminManageUsersContainer'
+import AdminManageSingleUserContainer from './Admin/containers/AdminManageSingleUserContainer'
+import AdminManageProjectsContainer from './Admin/containers/AdminManageProjectsContainer'
+import AdminManageSingleProjectContainer from './Admin/containers/AdminManageSingleProjectContainer'
+
 import AdminManageHolidaysComponent from './Admin/AdminManageHolidaysComponent'
 import UserManageProfileComponent from './MyInfo/UserManageProfileComponent'
 import UserManageOffsComponent from './MyInfo/UserManageOffsComponent'
@@ -66,8 +67,8 @@ class App extends Component {
               <Route exact path="/admin" component={AdminComponent}/>
               <Route exact path="/admin/users" component={AdminManageUsersContainer}/>
               <Route exact path="/admin/users/singleuser" component={AdminManageSingleUserContainer}/>
-              <Route exact path="/admin/projects" component={AdminManageProjectsComponent}/>
-              <Route exact path="/admin/projects/:id" component={AdminManageSingleProjectComponent}/>
+              <Route exact path="/admin/projects" component={AdminManageProjectsContainer}/>
+              <Route exact path="/admin/projects/singleproject" component={AdminManageSingleProjectContainer}/>
               <Route exact path="/admin/holidays" component={AdminManageHolidaysComponent}/>
 
               <Route exact path="/about" component={AboutComponent}/>

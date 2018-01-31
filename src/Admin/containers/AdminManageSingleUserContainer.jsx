@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import AdminManageSingleUserComponent from './AdminManageSingleUserComponent'
-import {setSelectedUser} from '../actions'
+import AdminManageSingleUserComponent from '../AdminManageSingleUserComponent'
+import {setSelectedUser} from '../../actions'
 import {withRouter} from 'react-router-dom'
 
 const mapState = (state) => ({

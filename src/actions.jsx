@@ -2,6 +2,7 @@ import axios from 'axios'
 import history from './history'
 
 export const SET_SELECTED_USER = 'SET_SELECTED_USER'
+export const SET_SELECTED_PROJECT = 'SET_SELECTED_PROJECT'
 
 export function setSelectedUser(user){
   return {
@@ -14,6 +15,20 @@ export function rerouteToSelectedUser(user){
   return (dispatch, getState) => {
     dispatch(setSelectedUser(user))
     history.push('/admin/users/singleuser')
+  }
+}
+
+export function setSelectedProject(project){
+  return {
+    type: SET_SELECTED_PROJECT,
+    project
+  }
+}
+
+export function rerouteToSelectedProject(project){
+  return (dispatch, getState) => {
+    dispatch(setSelectedProject(project))
+    history.push('/admin/projects/singleproject')
   }
 }
 
