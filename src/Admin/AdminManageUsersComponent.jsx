@@ -19,8 +19,6 @@ class AdminManageUsersComponent extends Component {
       nextURL:"",
       prevURL:"",
       modalOpen:false,
-      selectedPerson:{}
-
     }
     this.deleteThing = this.deleteThing.bind(this)
     this.updateThing = this.updateThing.bind(this)
@@ -100,7 +98,8 @@ class AdminManageUsersComponent extends Component {
   }
 
   selectPerson(thing){
-    this.setState({selectedPerson:thing})
+    this.props.rerouteToSelectedUser(thing)
+    // this.setState({selectedPerson:thing})
   }
 
   unselectPerson(){
@@ -112,7 +111,7 @@ class AdminManageUsersComponent extends Component {
       <div>
         <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin')}}></Button>
 
-        {!this.state.selectedPerson.name?<div className="thing">
+        <div className="thing">
           <h3>Select a Person</h3>
           <CreateButton thingName="Person" createF={this.createThing}/>
           <Button color="orange" onClick={this.showDeletes}>Toggle Modify a Person</Button>
@@ -138,20 +137,7 @@ class AdminManageUsersComponent extends Component {
           {!!this.state.nextURL?<Button onClick={this.toNextPage}>Next Page</Button>:null}
           {!!this.state.prevURL?<Button onClick={this.toPrevPage}>Previous Page</Button>:null}
           <h1>Page: {this.state.currPageNo+1}/{this.state.totalPages}</h1>
-        </div>:
-        <div className="peopleCard">
-              <h3>Selected Person:</h3>
-          <div className="info">
-            <div className="people">
-              <div>{this.state.selectedPerson.name}</div> 
-            </div>              
-          </div> 
-
-          <div className="buttons">
-            <Button color="blue" icon="arrow circle left" onClick={this.unselectPerson}></Button>
-          </div>
-          <br/>      
-        </div>}
+        </div>
       </div>
     );
   }

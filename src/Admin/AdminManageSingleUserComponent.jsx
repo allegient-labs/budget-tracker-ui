@@ -10,19 +10,22 @@ class AdminManageSingleUserComponent extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
-      <div className="peopleCard">
-          <h3>Selected Person:</h3>
-          <div className="info">
-            <div className="people">
-              <div>{this.state.selectedPerson.name}</div> 
-            </div>              
-          </div> 
+      <div>
+        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin/users')}}></Button>
+        <div className="peopleCard">
+            <h3>Selected Person:</h3>
+            <div className="info">
+              <div className="people">
+                <h3>{this.props.selectedUser.name?this.props.selectedUser.name:"No User Selected"}</h3>
+              </div>              
+            </div> 
 
-          <div className="buttons">
-            <Button color="blue" icon="arrow circle left" onClick={this.unselectPerson}></Button>
-          </div>
-          <br/>      
+            <div className="buttons">
+            </div>
+            <br/>      
+        </div>
       </div>
     );
   }
