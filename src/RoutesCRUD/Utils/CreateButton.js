@@ -3,7 +3,7 @@ import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 
 
 //requires a thing prop, a createF prop, a thingName prop
-class CreatePerson extends React.Component {
+class CreateButton extends React.Component {
   constructor(){
     super()
     this.state = { 
@@ -41,7 +41,7 @@ class CreatePerson extends React.Component {
       </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={this.props.createF.bind(null, null, this.handleClose, {name:this.state.name})} type='submit' color='green' inverted>
+        <Button onClick={this.props.createF.bind(null, null, this.handleClose, {name: this.state.name})} type='submit' color='green' inverted>
           <Icon name='checkmark' /> Submit
         </Button>
         <Button onClick={this.handleClose} basic color='red' inverted>
@@ -53,4 +53,4 @@ class CreatePerson extends React.Component {
   }
 }
 
-export default CreatePerson
+export default CreateButton

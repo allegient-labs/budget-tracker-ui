@@ -12,6 +12,8 @@ class UtilityHeader extends Component {
           <img src={logo} className="App-logo col-md-12" alt="logo" />
 
           <h2>DMI Budget Tracker</h2>
+
+          <h5>CRUD UTILITY NAV:</h5>
           <NavLink to={`/personscrud`} activeClassName="active">People</NavLink>
           <NavLink to={`/timeoffs`} activeClassName="active">Timeoffs</NavLink>
           <NavLink to={`/practice`} activeClassName="active">Practice</NavLink>
@@ -21,6 +23,7 @@ class UtilityHeader extends Component {
           <NavLink to={`/assignments`} activeClassName="active">Assignments</NavLink>          
           <NavLink to={`/about`} activeClassName="active">About</NavLink>
 <br/>
+          <h5>App Nav:</h5>
           <NavLink to={`/stats`} activeClassName="active">Statistics</NavLink>
           <NavLink to={`/projects`} activeClassName="active">Projects</NavLink>
           <NavLink to={`/myinfo`} activeClassName="active">MyInfo</NavLink>
