@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import axios from "axios"
 import { Button } from 'semantic-ui-react'
 
-class UserManageSingleOffComponent extends Component {
+class SingleOffComponent extends Component {
   constructor(){
     super()
     this.state={}
@@ -12,10 +12,10 @@ class UserManageSingleOffComponent extends Component {
   render() {
     return (
       <div>
-        <h3>UserManageSingleOffComponent</h3>
+        <h3>SingleOffComponent</h3>
       </div>
     );
   }
 }
 
-export default UserManageSingleOffComponent;
+export default SingleOffComponent;

@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import axios from "axios"
 import { Button } from 'semantic-ui-react'
+import history from '../history'
 import {withRouter} from 'react-router-dom'
 
-class UserManageProfileComponent extends Component {
+class OffsComponent extends Component {
   constructor(){
     super()
     this.state={}
@@ -13,11 +14,11 @@ class UserManageProfileComponent extends Component {
   render() {
     return (
       <div>
-        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/myinfo')}}></Button>      
-        <h3>UserManageProfileComponent</h3>
+        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/myinfo')}}></Button>
+        <h3>OffsComponent</h3>
       </div>
     );
   }
 }
 
-export default withRouter(UserManageProfileComponent);
+export default withRouter(OffsComponent);

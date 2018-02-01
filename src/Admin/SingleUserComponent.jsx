@@ -4,7 +4,7 @@ import axios from "axios"
 import { Button } from 'semantic-ui-react'
 import EditProjectCard from './EditProjectCard'
 
-class AdminManageSingleUserComponent extends Component {
+class SingleUserComponent extends Component {
   constructor(){
     super()
     this.state={}
@@ -41,4 +41,4 @@ class AdminManageSingleUserComponent extends Component {
   }
 }
 
-export default AdminManageSingleUserComponent;
+export default SingleUserComponent;

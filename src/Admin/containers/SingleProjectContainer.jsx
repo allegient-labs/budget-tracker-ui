@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import AdminManageSingleProjectComponent from '../AdminManageSingleProjectComponent'
+import SingleProjectComponent from '../SingleProjectComponent'
 import {rerouteToSelectedProject} from '../../actions'
 import {withRouter} from 'react-router-dom'
 
@@ -17,4 +17,4 @@ const mapDispatch = (dispatch) => {
 }
 
 
-export default withRouter(connect(mapState, mapDispatch)(AdminManageSingleProjectComponent));
+export default withRouter(connect(mapState, mapDispatch)(SingleProjectComponent));

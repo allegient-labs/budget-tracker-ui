@@ -4,7 +4,7 @@ import axios from "axios"
 import { Button } from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
 
-class UserManageLogsComponent extends Component {
+class LogsComponent extends Component {
   constructor(){
     super()
     this.state={}
@@ -13,12 +13,11 @@ class UserManageLogsComponent extends Component {
   render() {
     return (
       <div>
-        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/myinfo')}}></Button>
-
-        <h3>UserManageLogsComponent</h3>
+        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin')}}></Button>
+        <h3>ClientsComponent</h3>
       </div>
     );
   }
 }
 
-export default withRouter(UserManageLogsComponent);
+export default withRouter(LogsComponent);

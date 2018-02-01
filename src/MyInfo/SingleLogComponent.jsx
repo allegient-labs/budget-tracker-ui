@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import axios from "axios"
 import { Button } from 'semantic-ui-react'
 
-class UserManageSingleLogComponent extends Component {
+class SingleLogComponent extends Component {
   constructor(){
     super()
     this.state={}
@@ -12,10 +12,10 @@ class UserManageSingleLogComponent extends Component {
   render() {
     return (
       <div>
-        <h3>UserManageSingleLogComponent</h3>
+        <h3>SingleLogComponent</h3>
       </div>
     );
   }
 }
 
-export default UserManageSingleLogComponent;
+export default SingleLogComponent;

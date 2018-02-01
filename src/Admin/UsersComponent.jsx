@@ -6,7 +6,7 @@ import DeleteButton from '../RoutesCRUD/Utils/DeleteButton'
 import {API_URL} from '../commonVars'
 import EditPeopleCard from '../RoutesCRUD/People/EditPeopleCard'
 
-class AdminManageProjectsComponent extends Component {
+class UsersComponent extends Component {
   constructor(){
     super()
     this.state={
@@ -31,14 +31,14 @@ class AdminManageProjectsComponent extends Component {
   }
 
   getThings(url){
-    const nav_url = url?url.href:API_URL+'/projects';
+    const nav_url = url?url.href:API_URL+'/persons';
 
     axios.get(nav_url)
     .then((things)=>{    
       this.setState({
         totalPages: things.data.page.totalPages, 
         currPageNo:things.data.page.number, 
-        things: things.data._embedded['project'], 
+        things: things.data._embedded['person'], 
         nextURL:things.data._links.next, 
         prevURL:things.data._links.prev
       })
@@ -82,7 +82,7 @@ class AdminManageProjectsComponent extends Component {
   }
 
   createThing(url, closeFunc, payload){
-    const nav_url = url?url.href:API_URL+'/projects';
+    const nav_url = url?url.href:API_URL+'/persons';
 
     axios.post(nav_url, payload)
     .then((res)=>{
@@ -92,7 +92,7 @@ class AdminManageProjectsComponent extends Component {
   }
 
   selectPerson(thing){
-    this.props.rerouteToSelectedProject(thing)
+    this.props.rerouteToSelectedUser(thing)
   }
 
   unselectPerson(){
@@ -105,7 +105,7 @@ class AdminManageProjectsComponent extends Component {
         <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin')}}></Button>
 
         <div className="thing">
-          <h3>Select a Project</h3>
+          <h3>Select a Person</h3>
           <CreateButton thingName="Person" createF={this.createThing}/>
           <Button color="orange" onClick={this.showDeletes}>Toggle Modify a Person</Button>
           {this.state.things.length?this.state.things.map((thing, i)=>{
@@ -124,6 +124,7 @@ class AdminManageProjectsComponent extends Component {
                       {this.state.deletesShown?<DeleteButton thingName="Person" thing={thing} deleteF={this.deleteThing}/>:null}
                     </div>
                 </div>
+                
               </div>
               )
           }):<h2>Retrieving {this.props.thingName}...</h2>}
@@ -136,4 +137,4 @@ class AdminManageProjectsComponent extends Component {
   }
 }
 
-export default AdminManageProjectsComponent;
+export default UsersComponent;

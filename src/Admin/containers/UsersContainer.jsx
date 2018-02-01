@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import AdminManageUsersComponent from '../AdminManageUsersComponent'
+import UsersComponent from '../UsersComponent'
 import { rerouteToSelectedUser } from '../../actions'
 import { withRouter } from 'react-router-dom'
 
@@ -17,4 +17,4 @@ const mapDispatch = (dispatch) => {
 }
 
 
-export default withRouter(connect(mapState, mapDispatch)(AdminManageUsersComponent));
+export default withRouter(connect(mapState, mapDispatch)(UsersComponent));

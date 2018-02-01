@@ -6,7 +6,7 @@ import DeleteButton from '../RoutesCRUD/Utils/DeleteButton'
 import {API_URL} from '../commonVars'
 import EditPeopleCard from '../RoutesCRUD/People/EditPeopleCard'
 
-class AdminManageUsersComponent extends Component {
+class ProjectsComponent extends Component {
   constructor(){
     super()
     this.state={
@@ -31,14 +31,14 @@ class AdminManageUsersComponent extends Component {
   }
 
   getThings(url){
-    const nav_url = url?url.href:API_URL+'/persons';
+    const nav_url = url?url.href:API_URL+'/projects';
 
     axios.get(nav_url)
     .then((things)=>{    
       this.setState({
         totalPages: things.data.page.totalPages, 
         currPageNo:things.data.page.number, 
-        things: things.data._embedded['person'], 
+        things: things.data._embedded['project'], 
         nextURL:things.data._links.next, 
         prevURL:things.data._links.prev
       })
@@ -82,7 +82,7 @@ class AdminManageUsersComponent extends Component {
   }
 
   createThing(url, closeFunc, payload){
-    const nav_url = url?url.href:API_URL+'/persons';
+    const nav_url = url?url.href:API_URL+'/projects';
 
     axios.post(nav_url, payload)
     .then((res)=>{
@@ -92,7 +92,7 @@ class AdminManageUsersComponent extends Component {
   }
 
   selectPerson(thing){
-    this.props.rerouteToSelectedUser(thing)
+    this.props.rerouteToSelectedProject(thing)
   }
 
   unselectPerson(){
@@ -105,8 +105,8 @@ class AdminManageUsersComponent extends Component {
         <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin')}}></Button>
 
         <div className="thing">
-          <h3>Select a Person</h3>
-          <CreateButton thingName="Person" createF={this.createThing}/>
+          <h3>Select a Project</h3>
+          <CreateButton thingName="Project" createF={this.createThing}/>
           <Button color="orange" onClick={this.showDeletes}>Toggle Modify a Person</Button>
           {this.state.things.length?this.state.things.map((thing, i)=>{
             return (
@@ -124,7 +124,6 @@ class AdminManageUsersComponent extends Component {
                       {this.state.deletesShown?<DeleteButton thingName="Person" thing={thing} deleteF={this.deleteThing}/>:null}
                     </div>
                 </div>
-                
               </div>
               )
           }):<h2>Retrieving {this.props.thingName}...</h2>}
@@ -137,4 +136,4 @@ class AdminManageUsersComponent extends Component {
   }
 }
 
-export default AdminManageUsersComponent;
+export default ProjectsComponent;

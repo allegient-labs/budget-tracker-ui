@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import axios from "axios"
 import { Button } from 'semantic-ui-react'
 
-class AdminManageHolidaysComponent extends Component {
+class HolidaysComponent extends Component {
   constructor(){
     super()
     this.state={}
@@ -20,4 +20,4 @@ class AdminManageHolidaysComponent extends Component {
   }
 }
 
-export default AdminManageHolidaysComponent;
+export default HolidaysComponent;

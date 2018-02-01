@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react'
 import {NavLink} from 'react-router-dom'
 import history from '../history'
 
-class UserManageInfoComponent extends Component {
+class InfoComponent extends Component {
   constructor(){
     super()
     this.state={}
@@ -22,4 +22,4 @@ class UserManageInfoComponent extends Component {
   }
 }
 
-export default UserManageInfoComponent;
+export default InfoComponent;

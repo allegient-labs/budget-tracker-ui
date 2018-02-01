@@ -7,23 +7,42 @@ class EditProjectCard extends React.Component {
     super()
     this.state = { 
       modalOpen:false,
-      name:""
+      name:this.props&&this.props.thing.name?this.props.thing.name:"",
+      description:this.props&&this.props.thing.description?this.props.thing.description:"",
+      startDate:this.props&&this.props.thing.startDate?this.props.thing.startDate:0,
+      endDate:this.props&&this.props.thing.endDate?this.props.thing.endDate:0
      }
 
     this.handleOpen=this.handleOpen.bind(this)
     this.handleClose=this.handleClose.bind(this)
-    this.changeHandler=this.changeHandler.bind(this)
+    
+    this.handleName=this.handleName.bind(this)
+    this.handleDescription=this.handleDescription.bind(this)
+    this.handleStartDate=this.handleStartDate.bind(this)
+    this.handleEndDate=this.handleEndDate.bind(this)
+    
   }
 
   handleOpen(){this.setState({ modalOpen: true })}
 
   handleClose(){this.setState({ modalOpen: false })}
 
-  changeHandler(evt){
+
+  handleName(evt){
     this.setState({name:evt.target.value})
+  }
+  handleDescription(evt){
+    this.setState({description:evt.target.value})
+  }
+  handleStartDate(evt){
+    this.setState({startDate:evt.target.value})
+  }
+  handleEndDate(evt){
+    this.setState({endDate:evt.target.value})    
   }
 
   render(){
+    console.log(this.props&&this.props.thing.name?this.props.thing.name:"")
     return(
     <Modal trigger={<Button color='teal' icon='write' onClick={this.handleOpen}></Button>}         
       onClose={()=>this.setState({modalOpen:false})}
@@ -33,14 +52,32 @@ class EditProjectCard extends React.Component {
       <Header content={this.props.thing.name}/>
       <Modal.Content>
       <Form>
-        <label>Name</label>
+        <label>Name:</label>
         <Form.Field>
-          <input onChange={this.changeHandler} value={this.state.value} placeholder={this.props.thing.name} />
+          <input onChange={this.handleName} value={this.state.name} />
+        </Form.Field>
+        <label>Description:</label>
+        <Form.Field>
+          <input onChange={this.handleDescription} value={this.state.description}  />
+        </Form.Field>
+        <label>StartDate:</label>
+        <Form.Field>
+          <input onChange={this.handleStartDate} value={this.state.startDate}  />
+        </Form.Field>
+        <label>EndDate:</label>
+        <Form.Field>
+          <input onChange={this.handleEndDate} value={this.state.endDate} />
         </Form.Field>
       </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={this.props.thing._links?this.props.updateF.bind(null, this.props.thing._links.self, this.handleClose, {name:this.state.name}):null} type='submit' color='green' inverted>
+        <Button onClick={this.props.thing._links?this.props.updateF.bind(null, this.props.thing._links.self, this.handleClose, 
+          {name:this.state.name,
+          client:this.state.client, 
+            description:this.state.description, 
+            startDate:this.state.startDate, 
+            endDate:this.state.endDate
+          }):null} type='submit' color='green' inverted>
           <Icon name='checkmark' /> Submit
         </Button>
         <Button onClick={this.handleClose} basic color='red' inverted>
