@@ -26,7 +26,7 @@ import SingleUserContainer from './Admin/containers/SingleUserContainer'
 import ProjectsContainer from './Admin/containers/ProjectsContainer'
 import SingleProjectContainer from './Admin/containers/SingleProjectContainer'
 import ClientsContainer from './Admin/containers/ClientsContainer'
-
+import SingleClientContainer from './Admin/containers/SingleClientContainer'
 import HolidaysComponent from './Admin/HolidaysComponent'
 import ProfileComponent from './MyInfo/ProfileComponent'
 import OffsComponent from './MyInfo/OffsComponent'
@@ -68,7 +68,8 @@ class App extends Component {
               <Route exact path="/admin" component={AdminComponent}/>
               <Route exact path="/admin/users" component={UsersContainer}/>
               <Route exact path="/admin/users/singleuser" component={SingleUserContainer}/>
-              <Route exact path="/admin/clients" component={ClientsContainer}/>              
+              <Route exact path="/admin/clients" component={ClientsContainer}/>      
+              <Route exact path="/admin/clients/singleclient" component={SingleClientContainer}/>              
               <Route exact path="/admin/projects" component={ProjectsContainer}/>
               <Route exact path="/admin/projects/singleproject" component={SingleProjectContainer}/>
               <Route exact path="/admin/holidays" component={HolidaysComponent}/>

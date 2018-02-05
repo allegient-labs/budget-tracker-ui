@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StatsStyle from './StatsStyle.css'
+import './StatsStyle.css'
 class StatsComponent extends Component {
   render() {
     return (

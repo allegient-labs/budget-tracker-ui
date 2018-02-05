@@ -5,9 +5,10 @@ import CreateButton from '../RoutesCRUD/Utils/CreateButton'
 import DeleteButton from '../RoutesCRUD/Utils/DeleteButton'
 import {API_URL} from '../commonVars'
 import EditPeopleCard from '../RoutesCRUD/People/EditPeopleCard'
-import CreateProject from './CreateProject'
 
-class ProjectsComponent extends Component {
+//give props: lowerPlural, lowerSingular
+
+class UsersComponent extends Component {
   constructor(){
     super()
     this.state={
@@ -31,14 +32,14 @@ class ProjectsComponent extends Component {
   }
 
   getThings(url){
-    const nav_url = url?url.href:API_URL+'/projects';
-
+    const nav_url = url?url.href:API_URL+'/' + this.props.lowerPlural;
+    const inObj = this.props.lowerSingular?this.props.lowerSingular:this.props.lowerPlural
     axios.get(nav_url)
     .then((things)=>{    
       this.setState({
         totalPages: things.data.page.totalPages, 
         currPageNo:things.data.page.number, 
-        things: things.data._embedded['project'], 
+        things: things.data._embedded[inObj], 
         nextURL:things.data._links.next, 
         prevURL:things.data._links.prev
       })
@@ -81,25 +82,22 @@ class ProjectsComponent extends Component {
     closeFunc()
   }
 
-  createThing(url, closeFunc, payload, assocationCallback){
-    const nav_url = url?url.href:API_URL+'/projects';
+  createThing(url, closeFunc, payload){
+    const nav_url = url?url.href:API_URL+'/'+this.props.lowerPlural;
 
     axios.post(nav_url, payload)
     .then((res)=>{
-      assocationCallback(res.data._links.client.href)
-    })
-    .then(()=>{
       this.getThings()
     })
     closeFunc()    
   }
 
   selectPerson(thing){
-    this.props.rerouteToSelectedProject(thing)
+    this.props.rerouteToSelectedUser(thing)
   }
 
   unselectPerson(){
-    this.setState({selectedPerson:{}})
+    this.setState({selected:{}})
   }
 
   render() {
@@ -108,20 +106,20 @@ class ProjectsComponent extends Component {
         <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin')}}></Button>
 
         <div className="thing">
-          <h3>Select a Project</h3>
-          <CreateProject thingName="Project" createF={this.createThing}/>
+          <h3>Select a Person</h3>
+          <CreateButton thingName="Person" createF={this.createThing}/>
           {this.state.things.length?this.state.things.map((thing, i)=>{
             return (
-              <div className="thingCard" key = {i}>
+              <div className="peopleCard" key = {i}>
                 <div className="info">
                   <div className="people">
-                    <div>{thing.name}</div>
+                    <div>{thing.name}</div> 
                     <br/>      
                   </div>              
                 </div>
                 <div className="buttons">
                     <div className="buttons">
-                      <Button color="blue" icon="arrow circle right" onClick={this.selectPerson.bind(this, thing)}></Button>
+                      {this.state.deletesShown?null:<Button color="blue" icon="arrow circle right" onClick={this.selectPerson.bind(this, thing)}></Button>}
                     </div>
                 </div>
               </div>
@@ -136,4 +134,4 @@ class ProjectsComponent extends Component {
   }
 }
 
-export default ProjectsComponent;
+export default UsersComponent;

@@ -1,7 +1,6 @@
-import React from 'react'
 import { connect } from 'react-redux'
 import ProjectsComponent from '../ProjectsComponent'
-import {rerouteToSelectedProject} from '../../actions'
+import {rerouteToSelectedProject, getProjects} from '../../actions'
 import {withRouter} from 'react-router-dom'
 
 const mapState = (state) => ({
@@ -10,9 +9,12 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => {
   return {
+    getProjects(projects){
+      dispatch(getProjects(projects))
+    },
     rerouteToSelectedProject(project){
       dispatch(rerouteToSelectedProject(project))
-    }
+    },
   }
 }
 

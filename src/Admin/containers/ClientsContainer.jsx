@@ -1,17 +1,19 @@
-import React from 'react'
 import { connect } from 'react-redux'
 import ClientsComponent from '../ClientsComponent'
-import {rerouteToSelectedProject} from '../../actions'
+import {rerouteToSelectedClient, setSelectedClient} from '../../actions'
 import {withRouter} from 'react-router-dom'
 
 const mapState = (state) => ({
-  selectedProject:state.projects
+  selectedProject:state.clients
 });
 
 const mapDispatch = (dispatch) => {
   return {
-    rerouteToSelectedProject(project){
-      dispatch(rerouteToSelectedProject(project))
+    rerouteToSelectedClient(client){
+      dispatch(rerouteToSelectedClient(client))
+    },
+    setSelectedClient(client){
+      dispatch(setSelectedClient(client))
     }
   }
 }

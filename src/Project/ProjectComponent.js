@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {API_URL} from '../commonVars'
+// import {API_URL} from '../commonVars'
 
 class ProjectComponent extends Component {
   render() {

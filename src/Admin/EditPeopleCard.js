@@ -40,7 +40,7 @@ class EditPeopleCard extends React.Component {
       </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={this.props.thing._links?this.props.updateF.bind(null, this.props.thing._links.self, this.handleClose, {name:this.state.name}):null} type='submit' color='green' inverted>
+        <Button onClick={this.props.updateF.bind(null, this.props.thing._links.self, this.handleClose, {name:this.state.name})} type='submit' color='green' inverted>
           <Icon name='checkmark' /> Submit
         </Button>
         <Button onClick={this.handleClose} basic color='red' inverted>

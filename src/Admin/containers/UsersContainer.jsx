@@ -1,4 +1,3 @@
-import React from 'react'
 import { connect } from 'react-redux'
 import UsersComponent from '../UsersComponent'
 import { rerouteToSelectedUser } from '../../actions'

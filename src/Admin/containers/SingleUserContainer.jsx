@@ -1,11 +1,10 @@
-import React from 'react'
 import { connect } from 'react-redux'
 import SingleUserComponent from '../SingleUserComponent'
 import {setSelectedUser} from '../../actions'
 import {withRouter} from 'react-router-dom'
 
 const mapState = (state) => ({
-  selectedUser:state.users
+  selectedUser: state.users.selectedUser
 });
 
 const mapDispatch = (dispatch) => {

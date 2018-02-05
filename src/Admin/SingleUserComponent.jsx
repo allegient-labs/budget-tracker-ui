@@ -1,9 +1,8 @@
-
 import React, { Component } from 'react';
 import axios from "axios"
 import { Button } from 'semantic-ui-react'
-import EditProjectCard from './EditProjectCard'
-
+import EditPeopleCard from './EditPeopleCard'
+import AddAssignmentCard from './AddAssignmentCard'
 class SingleUserComponent extends Component {
   constructor(){
     super()
@@ -24,18 +23,19 @@ class SingleUserComponent extends Component {
     return (
       <div>
         <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin/users')}}></Button>
-        <div className="peopleCard">
+        {this.props.selectedUser.name?<div><div className="thingCard">
             <h3>Selected Person:</h3>
             <div className="info">
               <div className="people">
-                <h3>{this.props.selectedUser.name?this.props.selectedUser.name:"No User Selected"}</h3>
+                <h3>{this.props.selectedUser.name}</h3>
               </div>              
             </div> 
             <div className="buttons">
-              <EditProjectCard thingName="Project" thing={this.props.selectedUser} updateF={this.updateThing}/>
+              <EditPeopleCard thingName="People" thing={this.props.selectedUser} updateF={this.updateThing}/>
             </div>
-            <br/>      
-        </div>
+            </div>           
+            <AddAssignmentCard person={this.props.selectedUser}/>     
+        </div>:null}
       </div>
     );
   }

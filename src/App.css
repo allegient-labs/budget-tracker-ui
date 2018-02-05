@@ -82,7 +82,7 @@ div.panel {
   color: red;
 }
 
-.peopleCard{
+.thingCard{
   display: flex;
   justify-content: space-between;
   border-bottom: 2px solid lightgray;

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-import { Button } from 'semantic-ui-react'
 import {NavLink} from 'react-router-dom'
-import history from '../history'
 
 class InfoComponent extends Component {
   constructor(){

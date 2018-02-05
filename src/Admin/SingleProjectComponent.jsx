@@ -5,7 +5,6 @@ import { Button, Dropdown } from 'semantic-ui-react'
 import EditProjectCard from './EditProjectCard'
 import {API_URL} from '../commonVars'
 
-
 class SingleProjectComponent extends Component {
   constructor(){
     super()
@@ -19,11 +18,38 @@ class SingleProjectComponent extends Component {
 
     }
     this.updateThing=this.updateThing.bind(this)
+    this.getClients=this.getClients.bind(this)
+    this.getClientRelation=this.getClientRelation.bind(this)
     this.changeHandler=this.changeHandler.bind(this)
-    this.putClientAssociation=this.putClientAssociation.bind(this)
   }
 
   componentDidMount(){
+    this.getClients()
+    this.getClientRelation()
+    // this.props.getClients()
+  }
+
+  updateThing(url, closeFunc, payload, callback){
+
+    var updatedPayload = Object.assign(this.props.selectedProject, payload)
+    axios.put(url.href, updatedPayload)
+    .then((res)=>{
+      console.log(res.data._links.client)
+      callback(res.data._links.client.href)
+    })
+    .then(()=>{  
+      this.props.rerouteToSelectedProject(updatedPayload)
+    })
+    closeFunc()
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps.selectedProject._links.client.href)
+    this.getClientRelation(nextProps.selectedProject._links.client.href)
+  }
+
+
+  getClients(){
     axios.get(API_URL+'/clients')
     .then((clients)=>{
       this.setState({clients: clients.data._embedded.clients}, ()=>{
@@ -33,61 +59,45 @@ class SingleProjectComponent extends Component {
       })
       this.setState({clientsDropDown:arr})
     })})
+  }
 
-    this.props.selectedProject._links?this.setState({clientURI:this.props.selectedProject._links.client.href},()=>{
+  getClientRelation(uri){
+    const existing = this.props.selectedProject._links?this.props.selectedProject._links.client.href:null
+    const urizzle = uri?uri:existing
+
+    urizzle?this.setState({clientURI:urizzle},()=>{
       axios.get(this.state.clientURI)
       .then((client)=>{this.setState({linkedClient:client.data})})
       .catch((err)=>{console.log(err)})
     }):null
   }
 
-  updateThing(url, closeFunc, payload){
-    axios.put(url.href, payload)
-    .then((res)=>{
-      this.props.rerouteToSelectedProject(payload)
-    })
-    closeFunc()
-  }
-
   changeHandler(evt, selection){
     this.setState({selectedDropdownURI:selection.value})
   }
 
-  putClientAssociation(){
-    axios({  method: 'put',
-    url: this.state.clientURI,
-    data: this.state.selectedDropdownURI,
-    headers:{'Content-Type':'text/uri-list'}})
-    .then((client)=>{console.log(client)})
-    .then(()=>{
-      axios.get(this.state.clientURI)
-      .then((client)=>{this.setState({linkedClient:client.data})})
-      .catch((err)=>{console.log(err)})     
-    })
-  }
-
   render() {
-    console.log(this.state.linkedClient)
     return (
       <div>
         <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin/projects')}}></Button>
+      {this.props.selectedProject.name?
+        <div>
         <h3>Edit Project Details</h3>
         <div className="projects">
           <div>Name: {this.props.selectedProject.name}</div>
           <div>Description: {this.props.selectedProject.description}</div>
           <div>StartDate: {this.props.selectedProject.startDate}</div>  
           <div>EndDate: {this.props.selectedProject.endDate}</div>
+          <div>Client:{this.state.linkedClient.name}</div>
           <br/>
         </div>
         <div className="buttons">
-          <EditProjectCard thingName="Project" thing={this.props.selectedProject} updateF={this.updateThing}/>
+          <EditProjectCard thingName="Project" thing={this.props.selectedProject} linkedClient={this.state.linkedClient} updateF={this.updateThing}/>
           <Button color="red" icon='erase'></Button>          
         </div>
-        <h4>Current Client:</h4>
-        <div>{this.state.linkedClient.name}</div>
-        <h4>Set Client:</h4>
-        <Dropdown placeholder="Set client" fluid search selection onChange={this.changeHandler} options={this.state.clientsDropDown}/>
-        <Button color="green" onClick={this.putClientAssociation}>Confirm</Button>
+        </div>
+      :<div>Go back and select project</div>
+      }
       </div>
     );
   }

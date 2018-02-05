@@ -107,10 +107,9 @@ class UsersComponent extends Component {
         <div className="thing">
           <h3>Select a Person</h3>
           <CreateButton thingName="Person" createF={this.createThing}/>
-          <Button color="orange" onClick={this.showDeletes}>Toggle Modify a Person</Button>
           {this.state.things.length?this.state.things.map((thing, i)=>{
             return (
-              <div className="peopleCard" key = {i}>
+              <div className="thingCard" key = {i}>
                 <div className="info">
                   <div className="people">
                     <div>{thing.name}</div> 
@@ -120,11 +119,8 @@ class UsersComponent extends Component {
                 <div className="buttons">
                     <div className="buttons">
                       {this.state.deletesShown?null:<Button color="blue" icon="arrow circle right" onClick={this.selectPerson.bind(this, thing)}></Button>}
-                      {this.state.deletesShown?<EditPeopleCard thingName="Person" thing={thing} updateF={this.updateThing}/>:null}
-                      {this.state.deletesShown?<DeleteButton thingName="Person" thing={thing} deleteF={this.deleteThing}/>:null}
                     </div>
                 </div>
-                
               </div>
               )
           }):<h2>Retrieving {this.props.thingName}...</h2>}
