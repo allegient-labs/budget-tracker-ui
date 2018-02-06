@@ -24,7 +24,8 @@ class AddAssignmentCard extends React.Component {
       selectedPracticeURI:"",
 
      }
-
+     this.changeProjectHandler=this.changeProjectHandler.bind(this)
+     this.changePracticeHandler=this.changePracticeHandler.bind(this)
      this.handleSubmit=this.handleSubmit.bind(this)
   }
 
@@ -53,17 +54,54 @@ class AddAssignmentCard extends React.Component {
   }
 
   handleSubmit(evt){
-    console.log( {allocation:evt.target.allocation.value} )
-    const data = new FormData(evt.target);
-    console.log(data)
+
+    const form = {allocation:evt.target.allocation.value, 
+      billRate:evt.target.billrate.value,  
+      forecastAllocation:evt.target.forecastallocation.value, 
+      notes:evt.target.notes.value, role:evt.target.role.value, 
+      startDate:evt.target.startdate.value, 
+      endDate:evt.target.enddate.value, 
+      practiceURI: this.state.selectedPracticeURI,
+      projectURI: this.state.selectedProjectURI,
+      personURI: this.props.person._links.self.href
+    }
+    axios.post(API_URL+'/assignments', form)
+    .then((assignment)=>{
+      const arr1 = [assignment.data._links.person.href, assignment.data._links.project.href, assignment.data._links.practice.href]
+      const arr2 = [this.props.person._links.self.href, this.state.selectedProjectURI, this.state.selectedPracticeURI]
+
+      axios({
+          method: 'put',
+          url: arr1[0],
+          data: arr2[0],
+          headers:{'Content-Type':'text/uri-list'}
+        })
+      .then((res)=>{
+        return axios({
+          method: 'put',
+          url: arr1[1],
+          data: arr2[1],
+          headers:{'Content-Type':'text/uri-list'}
+        })
+      })
+      .then((res)=>{
+        return axios({
+          method: 'put',
+          url: arr1[2],
+          data: arr2[2],
+          headers:{'Content-Type':'text/uri-list'}
+        })
+      })
+      .catch((err)=>{console.log(err)})
+    })
   }
 
-  changeProjectHandler(){
-
+  changeProjectHandler(evt, selection){
+    this.setState({selectedProjectURI:selection.value})
   }
 
-  changePracticeHandler(){
-
+  changePracticeHandler(evt, selection){
+    this.setState({selectedPracticeURI:selection.value})
   }
 
   render(){

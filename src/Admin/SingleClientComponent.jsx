@@ -6,9 +6,10 @@ import EditPeopleCard from './EditPeopleCard'
 class SingleClientComponent extends Component {
   constructor(){
     super()
-    this.state={}
+    this.state={showHolidays:false}
 
     this.updateThing=this.updateThing.bind(this)
+    this.toggleShowHolidays=this.toggleShowHolidays.bind(this)
   }
 
   updateThing(url, closeFunc, payload){
@@ -19,11 +20,15 @@ class SingleClientComponent extends Component {
     closeFunc()
   }
 
+  toggleShowHolidays(){
+    this.setState({showHolidays: !this.state.showHolidays})
+  }
+
   render() {
     return (
       <div>
         <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin/clients')}}></Button>
-        {this.props.selectedClient.name?<div className="thingCard">
+        {this.props.selectedClient.name?<div><div className="thingCard">
             <h3>Selected Client:</h3>
             <div className="info">
               <div className="people">
@@ -33,7 +38,10 @@ class SingleClientComponent extends Component {
             <div className="buttons">
               <EditPeopleCard thingName="Client" thing={this.props.selectedClient} updateF={this.updateThing}/>
             </div>
-            <br/>      
+            <br/> 
+          </div>
+          <Button color="yellow" onClick={this.toggleShowHolidays}>Manage Client Holidays</Button>
+          {this.state.showHolidays?<div>hey</div>:null}     
         </div>:null}
       </div>
     );

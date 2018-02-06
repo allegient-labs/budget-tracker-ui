@@ -3,6 +3,8 @@ import axios from "axios"
 import { Button } from 'semantic-ui-react'
 import EditPeopleCard from './EditPeopleCard'
 import AddAssignmentCard from './AddAssignmentCard'
+import history from '../history.jsx'
+
 class SingleUserComponent extends Component {
   constructor(){
     super()
@@ -33,8 +35,9 @@ class SingleUserComponent extends Component {
             <div className="buttons">
               <EditPeopleCard thingName="People" thing={this.props.selectedUser} updateF={this.updateThing}/>
             </div>
-            </div>           
-            <AddAssignmentCard person={this.props.selectedUser}/>     
+            </div>
+            <Button color="yellow" onClick={()=>{history.push('/admin/users/singleuser/assignments')}}>See this person's assignments</Button>           
+            <AddAssignmentCard person={this.props.selectedUser}/>    
         </div>:null}
       </div>
     );

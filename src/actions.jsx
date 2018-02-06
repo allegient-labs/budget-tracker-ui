@@ -18,7 +18,6 @@ export function setSelectedUser(user){
 
 export function rerouteToSelectedUser(user){
   return (dispatch, getState) => {
-    console.log(user)
     dispatch(setSelectedUser(user))
     history.push('/admin/users/singleuser')
   }
@@ -50,7 +49,6 @@ export function getProjects(){
   return (dispatch, getState) => {
     axios.get(API_URL+'/projects')
     .then((projects)=>{
-      console.log(projects.data._embedded.project)
       dispatch(setProjectsList(projects.data._embedded.project))
     })
   }
@@ -82,7 +80,6 @@ export function getClients(){
   return (dispatch, getState) => {
     axios.get(API_URL+'/clients')
     .then((clients)=>{
-      console.log(clients.data._embedded.client)
       dispatch(setClientsList(clients.data._embedded.client))
     })
   }

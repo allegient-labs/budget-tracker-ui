@@ -26,7 +26,6 @@ class SingleProjectComponent extends Component {
   componentDidMount(){
     this.getClients()
     this.getClientRelation()
-    // this.props.getClients()
   }
 
   updateThing(url, closeFunc, payload, callback){
@@ -34,7 +33,6 @@ class SingleProjectComponent extends Component {
     var updatedPayload = Object.assign(this.props.selectedProject, payload)
     axios.put(url.href, updatedPayload)
     .then((res)=>{
-      console.log(res.data._links.client)
       callback(res.data._links.client.href)
     })
     .then(()=>{  

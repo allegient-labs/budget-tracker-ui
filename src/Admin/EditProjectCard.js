@@ -66,7 +66,6 @@ class EditProjectCard extends React.Component {
   }
 
   putClientAssociation(clientURI){
-    console.log(clientURI)
     axios({  method: 'put',
     url: clientURI,
     data: this.state.selectedDropdownURI,
