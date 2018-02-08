@@ -12,6 +12,10 @@ class SingleClientComponent extends Component {
     this.toggleShowHolidays=this.toggleShowHolidays.bind(this)
   }
 
+  componentDidMount(){
+    axios.get()
+  }
+
   updateThing(url, closeFunc, payload){
     axios.put(url.href, payload)
     .then((res)=>{
@@ -27,8 +31,8 @@ class SingleClientComponent extends Component {
   render() {
     return (
       <div>
-        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin/clients')}}></Button>
-        {this.props.selectedClient.name?<div><div className="thingCard">
+        {this.props.selectedClient.name?<div>
+          <div className="thingCard">
             <h3>Selected Client:</h3>
             <div className="info">
               <div className="people">
@@ -41,7 +45,7 @@ class SingleClientComponent extends Component {
             <br/> 
           </div>
           <Button color="yellow" onClick={this.toggleShowHolidays}>Manage Client Holidays</Button>
-          {this.state.showHolidays?<div>hey</div>:null}     
+          {this.state.showHolidays?<div>Manage Holidays not yet implemented</div>:null}     
         </div>:null}
       </div>
     );

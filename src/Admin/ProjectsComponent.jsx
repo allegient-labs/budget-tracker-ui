@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import axios from "axios"
-import { Button } from 'semantic-ui-react'
 import CreateButton from '../RoutesCRUD/Utils/CreateButton'
 import DeleteButton from '../RoutesCRUD/Utils/DeleteButton'
 import {API_URL} from '../commonVars'
 import EditPeopleCard from '../RoutesCRUD/People/EditPeopleCard'
 import CreateProject from './CreateProject'
+import { Button, Image, List } from 'semantic-ui-react'
+
 
 class ProjectsComponent extends Component {
   constructor(){
@@ -105,8 +106,6 @@ class ProjectsComponent extends Component {
   render() {
     return (
       <div>
-        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin')}}></Button>
-
         <div className="thing">
           <h3>Select a Project</h3>
           <CreateProject thingName="Project" createF={this.createThing}/>

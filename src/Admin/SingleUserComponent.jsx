@@ -24,8 +24,8 @@ class SingleUserComponent extends Component {
   render() {
     return (
       <div>
-        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin/users')}}></Button>
-        {this.props.selectedUser.name?<div><div className="thingCard">
+        {this.props.selectedUser.name?<div>
+          <div className="thingCard">
             <h3>Selected Person:</h3>
             <div className="info">
               <div className="people">
@@ -35,9 +35,9 @@ class SingleUserComponent extends Component {
             <div className="buttons">
               <EditPeopleCard thingName="People" thing={this.props.selectedUser} updateF={this.updateThing}/>
             </div>
-            </div>
-            <Button color="yellow" onClick={()=>{history.push('/admin/users/singleuser/assignments')}}>See this person's assignments</Button>           
-            <AddAssignmentCard person={this.props.selectedUser}/>    
+          </div>
+          <Button color="yellow" onClick={()=>{history.push('/admin/users/singleuser/assignments')}}>See this person's assignments</Button>           
+          <AddAssignmentCard person={this.props.selectedUser}/>    
         </div>:null}
       </div>
     );

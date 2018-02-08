@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Header, Icon, Modal, Form, Dropdown } from 'semantic-ui-react'
 import axios from 'axios'
 import {API_URL} from '../commonVars'
+import history from '../history.jsx'
 
 //requires a thing prop, an updateF prop, a thingName prop
 class AddAssignmentCard extends React.Component {
@@ -69,7 +70,7 @@ class AddAssignmentCard extends React.Component {
     .then((assignment)=>{
       const arr1 = [assignment.data._links.person.href, assignment.data._links.project.href, assignment.data._links.practice.href]
       const arr2 = [this.props.person._links.self.href, this.state.selectedProjectURI, this.state.selectedPracticeURI]
-
+      console.log(1)
       axios({
           method: 'put',
           url: arr1[0],
@@ -77,6 +78,7 @@ class AddAssignmentCard extends React.Component {
           headers:{'Content-Type':'text/uri-list'}
         })
       .then((res)=>{
+      console.log(3)
         return axios({
           method: 'put',
           url: arr1[1],
@@ -85,6 +87,7 @@ class AddAssignmentCard extends React.Component {
         })
       })
       .then((res)=>{
+      console.log(4)
         return axios({
           method: 'put',
           url: arr1[2],
@@ -92,8 +95,28 @@ class AddAssignmentCard extends React.Component {
           headers:{'Content-Type':'text/uri-list'}
         })
       })
+      .then(()=>{
+              console.log(5)
+
+        this.setState({modalOpen:false,
+          name:"",
+          showEdit:false,
+          practices:[],
+          projects:[],
+          allocation:"",
+          billrate:"",
+          ForecastAllocation:"",
+          notes:"",
+          role:"",
+          startDate:0,
+          endDate:0,
+          selectedProjectURI:"",
+          selectedPracticeURI:""})
+        
+      })
       .catch((err)=>{console.log(err)})
     })
+      console.log(2)
   }
 
   changeProjectHandler(evt, selection){

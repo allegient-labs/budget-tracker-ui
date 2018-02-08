@@ -25,7 +25,7 @@ margin: auto;}
 }
 
 .App-header {
-  height: 255px;
+  height: 350px;
   padding: 20px;
 }
 
@@ -92,11 +92,24 @@ div.panel {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-
 }
 
 .buttons{
   white-space: nowrap;
+}
 
+#sidebar {  
+  position: fixed; 
+  margin-left: 410px; 
+}
+
+.titleHeader{
+  height: 120px;
+}
+
+#projectNav{
+}
+
+#historyNav{
 }
 

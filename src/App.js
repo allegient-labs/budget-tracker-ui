@@ -16,7 +16,7 @@ import TimelogsComponent from './RoutesCRUD/Timelogs/TimelogsComponent'
 import CRUDProjectsComponent from './RoutesCRUD/Projects/ProjectsComponent'
 import AssignmentsComponent from './RoutesCRUD/Assignments/AssignmentsComponent'
 
-import UtilityHeader from './UtilityHeader'
+import Header from './Header'
 
 import StatsComponent from './Stats/StatsComponent'
 import ProjectComponent from './Project/ProjectComponent'
@@ -45,7 +45,7 @@ class App extends Component {
       <Provider store={store}>
         <Router history={history}>
           <div className="App">
-            <UtilityHeader/>
+            <Header/>
             <div className="App-intro">
               <Route exact path="/" component={AboutComponent}/>
               <Route exact path="/personscrud" component={PeopleComponent}/>
@@ -68,6 +68,8 @@ class App extends Component {
               
               <Route exact path="/admin" component={AdminComponent}/>
               <Route exact path="/admin/users" component={UsersContainer}/>
+              <Route exact path="/admin/users/selectedUser/:id" component={SingleUserContainer}/>
+
               <Route exact path="/admin/users/singleuser" component={SingleUserContainer}/>
               <Route exact path="/admin/users/singleuser/assignments" component={SingleUserAssignmentsContainer}/>
               <Route exact path="/admin/clients" component={ClientsContainer}/>      

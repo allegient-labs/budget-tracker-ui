@@ -102,8 +102,6 @@ class UsersComponent extends Component {
   render() {
     return (
       <div>
-        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin')}}></Button>
-
         <div className="thing">
           <h3>Select a Person</h3>
           <CreateButton thingName="Person" createF={this.createThing}/>

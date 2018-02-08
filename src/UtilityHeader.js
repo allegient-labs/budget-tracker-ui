@@ -1,6 +1,9 @@
 import React, { Component} from 'react';
 import logo from './DMI_Logo.svg';
 import { NavLink, Link} from 'react-router-dom'
+import {Menu} from 'semantic-ui-react'
+import Breadcrumb from './Breadcrumb'
+import BudgetStatusMenu from './BudgetStatusMenu'
 
 class UtilityHeader extends Component {
   constructor(){
@@ -22,13 +25,21 @@ class UtilityHeader extends Component {
           <NavLink to={`/projectscrud`} activeClassName="active">Projects</NavLink>
           <NavLink to={`/assignments`} activeClassName="active">Assignments</NavLink>          
           <NavLink to={`/about`} activeClassName="active">About</NavLink>
-<br/>
+          <br/>
           <h5>App Nav:</h5>
           <NavLink to={`/stats`} activeClassName="active">Statistics</NavLink>
           <NavLink to={`/projects`} activeClassName="active">Projects</NavLink>
           <NavLink to={`/myinfo`} activeClassName="active">MyInfo</NavLink>
           <NavLink to={`/admin`} activeClassName="active">Admin</NavLink>
           <NavLink to={`/about`} activeClassName="active">About</NavLink>
+          <br/>
+          <br/>          
+          <div>
+            <span>BreadCrumb: </span>
+            <Breadcrumb/>
+          </div>
+          <br/>          
+          <BudgetStatusMenu/>
         </div>
     );
   }

@@ -12,7 +12,7 @@ class SingleUserComponent extends Component {
 
   componentDidMount(){
     if(this.props.selectedUser._links){
-      const id = this.props.selectedUser._links.person.href.slice('/')[this.props.selectedUser._links.person.href.slice('/').length-1];
+      const id = this.props.selectedUser._links.person.href.split('/')[this.props.selectedUser._links.person.href.split('/').length-1];
       axios.get('http://localhost:8080/assignments/search/findByPersonId?person_id='+id)
       .then((assignments)=>{
         this.setState({assignments:assignments.data._embedded.assignments})
@@ -23,7 +23,6 @@ class SingleUserComponent extends Component {
   render() {
     return (
       <div>
-        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin/users/singleuser')}}></Button>
         {this.props.selectedUser.name?<div><div className="thingCard">
             <h3>Assigned to {this.props.selectedUser.name}</h3> 
           </div>

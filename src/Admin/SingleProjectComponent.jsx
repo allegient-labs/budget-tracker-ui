@@ -77,7 +77,6 @@ class SingleProjectComponent extends Component {
   render() {
     return (
       <div>
-        <Button color="blue" icon="arrow circle left" onClick={()=>{this.props.history.push('/admin/projects')}}></Button>
       {this.props.selectedProject.name?
         <div>
         <h3>Edit Project Details</h3>
