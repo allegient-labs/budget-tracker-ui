@@ -19,7 +19,7 @@ export function setSelectedUser(user) {
 export function rerouteToSelectedUser(user) {
   return (dispatch, getState) => {
     dispatch(setSelectedUser(user));
-    history.push("/admin/users/singleuser");
+    history.push("/admin/persons/singleperson");
   };
 }
 

@@ -5,13 +5,13 @@ import CreateButton from "../RoutesCRUD/Utils/CreateButton";
 import DeleteButton from "../RoutesCRUD/Utils/DeleteButton";
 import { API_URL } from "../commonVars";
 import EditPeopleCard from "../RoutesCRUD/People/EditPeopleCard";
-
+import EnhancedCUDModal from '../EnhancedCUDModal'
+import PersonCard from '../PersonCard'
 class UsersComponent extends Component {
   constructor() {
     super();
     this.state = {
       things: [],
-      deletesShown: false,
       currPageNo: 0,
       totalPages: 0,
       isNext: false,
@@ -19,15 +19,12 @@ class UsersComponent extends Component {
       prevURL: "",
       modalOpen: false
     };
-    this.deleteThing = this.deleteThing.bind(this);
-    this.updateThing = this.updateThing.bind(this);
-    this.createThing = this.createThing.bind(this);
+
+    this.createPerson = this.createPerson.bind(this);
     this.getThings = this.getThings.bind(this);
-    this.showDeletes = this.showDeletes.bind(this);
     this.toPrevPage = this.toPrevPage.bind(this);
     this.toNextPage = this.toNextPage.bind(this);
     this.selectPerson = this.selectPerson.bind(this);
-    this.unselectPerson = this.unselectPerson.bind(this);
   }
 
   getThings(url) {
@@ -48,13 +45,7 @@ class UsersComponent extends Component {
     this.getThings();
   }
 
-  showDeletes() {
-    if (this.state.deletesShown) {
-      this.setState({ deletesShown: false });
-    } else {
-      this.setState({ deletesShown: true });
-    }
-  }
+
 
   toNextPage() {
     this.getThings(this.state.nextURL);
@@ -64,27 +55,12 @@ class UsersComponent extends Component {
     this.getThings(this.state.prevURL);
   }
 
-  deleteThing(url, closeFunc) {
-    axios.delete(url.href).then(res => {
-      this.getThings();
-    });
-    closeFunc();
-  }
-
-  updateThing(url, closeFunc, payload) {
-    axios.put(url.href, payload).then(res => {
-      this.getThings();
-    });
-    closeFunc();
-  }
-
-  createThing(url, closeFunc, payload) {
-    const nav_url = url ? url.href : API_URL + "/persons";
-
-    axios.post(nav_url, payload).then(res => {
-      this.getThings();
-    });
-    closeFunc();
+  createPerson(payload){
+    console.log(payload)
+    axios.post(API_URL + "/persons", payload)
+    .then(res=>{
+      this.getThings()
+    })
   }
 
   selectPerson(thing) {
@@ -100,7 +76,9 @@ class UsersComponent extends Component {
       <div>
         <div className="thing">
           <h3>Select a Person</h3>
-          <CreateButton thingName="Person" createF={this.createThing} />
+          <EnhancedCUDModal crudType="create">
+            <PersonCard submitAction={this.createPerson}/>
+          </EnhancedCUDModal>
           {this.state.things.length ? (
             this.state.things.map((thing, i) => {
               return (

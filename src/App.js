@@ -18,8 +18,8 @@ import Header from "./Header";
 import StatsComponent from "./Stats/StatsComponent";
 import ProjectComponent from "./Project/ProjectComponent";
 import AdminComponent from "./Admin/AdminComponent";
-import UsersContainer from "./Admin/containers/UsersContainer";
-import SingleUserContainer from "./Admin/containers/SingleUserContainer";
+import PersonsContainer from "./Admin/containers/UsersContainer";
+import SinglePersonContainer from "./Admin/containers/SingleUserContainer";
 import ProjectsContainer from "./Admin/containers/ProjectsContainer";
 import SingleProjectContainer from "./Admin/containers/SingleProjectContainer";
 import ClientsContainer from "./Admin/containers/ClientsContainer";
@@ -84,21 +84,21 @@ class App extends Component {
               />
 
               <Route exact path="/admin" component={AdminComponent} />
-              <Route exact path="/admin/users" component={UsersContainer} />
+              <Route exact path="/admin/persons" component={PersonsContainer} />
               <Route
                 exact
-                path="/admin/users/selectedUser/:id"
-                component={SingleUserContainer}
+                path="/admin/persons/singleperson/:id"
+                component={SinglePersonContainer}
               />
 
               <Route
                 exact
-                path="/admin/users/singleuser"
-                component={SingleUserContainer}
+                path="/admin/persons/singleperson"
+                component={SinglePersonContainer}
               />
               <Route
                 exact
-                path="/admin/users/singleuser/assignments"
+                path="/admin/persons/singleperson/assignments"
                 component={SingleUserAssignmentsContainer}
               />
               <Route exact path="/admin/clients" component={ClientsContainer} />

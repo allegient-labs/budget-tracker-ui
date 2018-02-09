@@ -4,7 +4,8 @@ import { Button } from "semantic-ui-react";
 import EditPeopleCard from "./EditPeopleCard";
 import AddAssignmentCard from "./AddAssignmentCard";
 import history from "../history.jsx";
-
+import EnhancedCUDModal from '../EnhancedCUDModal'
+import PersonCard from '../PersonCard'
 class SingleUserComponent extends Component {
   constructor() {
     super();
@@ -13,11 +14,10 @@ class SingleUserComponent extends Component {
     this.updateThing = this.updateThing.bind(this);
   }
 
-  updateThing(url, closeFunc, payload) {
-    axios.put(url.href, payload).then(res => {
+  updateThing(payload) {
+    axios.put(this.props.selectedUser._links.self.href, payload).then(res => {
       this.props.setSelectedUser(payload);
     });
-    closeFunc();
   }
 
   render() {
@@ -33,11 +33,9 @@ class SingleUserComponent extends Component {
                 </div>
               </div>
               <div className="buttons">
-                <EditPeopleCard
-                  thingName="People"
-                  thing={this.props.selectedUser}
-                  updateF={this.updateThing}
-                />
+                <EnhancedCUDModal crudType="edit">
+                  <PersonCard submitAction={this.updateThing}/>
+                </EnhancedCUDModal>                
               </div>
             </div>
             <Button
