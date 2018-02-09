@@ -1,4 +1,3 @@
-
 .App-title {
   font-size: 1.5em;
 }
@@ -7,20 +6,20 @@
   font-size: large;
 }
 
-
-.App{
+.App {
   text-align: center;
   max-width: 600px;
-margin: auto;}
+  margin: auto;
+}
 
-.App-intro{
+.App-intro {
   text-align: left;
   font-size: large;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  float:left;
+  float: left;
   height: 120px;
 }
 
@@ -29,87 +28,89 @@ margin: auto;}
   padding: 20px;
 }
 
-.Meetup-list{
+.Meetup-list {
   text-align: left;
   font-size: large;
 }
 
-.center{
-  text-align:center;
-  font-size:small;
+.center {
+  text-align: center;
+  font-size: small;
 }
 
-.description{
-  font-size:x-small;
+.description {
+  font-size: x-small;
 }
-
-
 
 /* Style the buttons that are used to open and close the accordion panel */
 button.accordion {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    transition: 0.4s;
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-button.accordion.active, button.accordion:hover {
-    background-color: #ddd;
+button.accordion.active,
+button.accordion:hover {
+  background-color: #ddd;
 }
 
 /* Style the accordion panel. Note: hidden by default */
 div.panel {
-    padding: 0 18px;
-    background-color: white;
-    display: none;
+  padding: 0 18px;
+  background-color: white;
+  display: none;
 }
 
-.event{
+.event {
   border-style: dashed;
 }
 
-.App-header a{
-  margin-right:10px;
+.App-header a {
+  margin-right: 10px;
 }
 
 .active {
   color: red;
 }
 
-.thingCard{
+.thingCard {
   display: flex;
   justify-content: space-between;
   border-bottom: 2px solid lightgray;
 }
 
-.info{
+.info {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.buttons{
+.buttons {
   white-space: nowrap;
 }
 
-#sidebar {  
-  position: fixed; 
-  margin-left: 410px; 
+#sidebar {
+  position: fixed;
+  margin-left: 410px;
 }
 
-.titleHeader{
+.titleHeader {
   height: 120px;
 }
 
-#projectNav{
+#projectNav {
 }
 
-#historyNav{
+#historyNav {
 }
 
+.calendarContainer {
+  height: 600px;
+}

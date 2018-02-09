@@ -1,12 +1,12 @@
-.chart{
+.chart {
   max-width: 600px;
   height: 400px;
   border-width: 3px;
   border-style: solid;
 }
-.one{
-    border-color: blue;
+.one {
+  border-color: blue;
 }
-.two{
-    border-color: green;
+.two {
+  border-color: green;
 }

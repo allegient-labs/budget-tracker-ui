@@ -5,7 +5,11 @@
   "dependencies": {
     "auto-bind": "^1.2.0",
     "axios": "^0.17.1",
+    "eslint-plugin-react": "^7.6.1",
+    "fullcalendar": "^3.8.2",
+    "moment": "^2.20.1",
     "react": "^16.2.0",
+    "react-big-calendar": "^0.18.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
@@ -21,5 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "prettier": "1.10.2"
   }
 }
