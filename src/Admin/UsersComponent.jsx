@@ -5,8 +5,10 @@ import CreateButton from "../RoutesCRUD/Utils/CreateButton";
 import DeleteButton from "../RoutesCRUD/Utils/DeleteButton";
 import { API_URL } from "../commonVars";
 import EditPeopleCard from "../RoutesCRUD/People/EditPeopleCard";
-import EnhancedCUDModal from '../EnhancedCUDModal'
-import PersonCard from '../PersonCard'
+import EnhancedCUDModal from '../utils/EnhancedCUDModal'
+import PersonCard from '../utils/PersonCard'
+import history from '../history'
+
 class UsersComponent extends Component {
   constructor() {
     super();
@@ -44,8 +46,6 @@ class UsersComponent extends Component {
   componentDidMount() {
     this.getThings();
   }
-
-
 
   toNextPage() {
     this.getThings(this.state.nextURL);
@@ -95,7 +95,7 @@ class UsersComponent extends Component {
                         <Button
                           color="blue"
                           icon="arrow circle right"
-                          onClick={this.selectPerson.bind(this, thing)}
+                          onClick={()=>{history.push('./persons/'+thing.id)}}
                         />
                       )}
                     </div>

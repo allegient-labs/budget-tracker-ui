@@ -13,8 +13,8 @@ class SingleUserComponent extends Component {
   }
 
   componentDidMount(){
-    if(this.props.selectedUser._links){
-      const id = this.props.selectedUser._links.person.href.split('/')[this.props.selectedUser._links.person.href.split('/').length-1];
+    const id = this.props.match.params.personId
+    if(id){
       axios.get(API_URL+'/assignments/search/findByPersonId?person_id='+id)
       .then((assignments)=>{
         this.setState({assignments:assignments.data._embedded.assignments})
@@ -42,8 +42,8 @@ class SingleUserComponent extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.selectedUser.name?<div><div className="thingCard">
+        <div>
+          <div className="thingCard">
             <h3>Assigned to {this.props.selectedUser.name}</h3> 
           </div>
           {this.state.assignments.map((assign, i)=>{
@@ -59,8 +59,7 @@ class SingleUserComponent extends Component {
               <br/>
             </div>)
           })}
-        </div>:null}
-      </div>
+        </div>
     );
   }
 }

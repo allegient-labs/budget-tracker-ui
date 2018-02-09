@@ -87,24 +87,19 @@ class App extends Component {
               <Route exact path="/admin/persons" component={PersonsContainer} />
               <Route
                 exact
-                path="/admin/persons/singleperson/:id"
+                path="/admin/persons/:personId"
                 component={SinglePersonContainer}
               />
 
               <Route
                 exact
-                path="/admin/persons/singleperson"
-                component={SinglePersonContainer}
-              />
-              <Route
-                exact
-                path="/admin/persons/singleperson/assignments"
+                path="/admin/persons/:personId/assignments"
                 component={SingleUserAssignmentsContainer}
               />
               <Route exact path="/admin/clients" component={ClientsContainer} />
               <Route
                 exact
-                path="/admin/clients/singleclient"
+                path="/admin/clients/:clientId"
                 component={SingleClientContainer}
               />
               <Route
@@ -114,7 +109,7 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/admin/projects/singleproject"
+                path="/admin/projects/:projectId"
                 component={SingleProjectContainer}
               />
               <Route

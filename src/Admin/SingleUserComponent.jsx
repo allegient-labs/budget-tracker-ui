@@ -4,14 +4,20 @@ import { Button } from "semantic-ui-react";
 import EditPeopleCard from "./EditPeopleCard";
 import AddAssignmentCard from "./AddAssignmentCard";
 import history from "../history.jsx";
-import EnhancedCUDModal from '../EnhancedCUDModal'
-import PersonCard from '../PersonCard'
+import EnhancedCUDModal from '../utils/EnhancedCUDModal'
+import PersonCard from '../utils/PersonCard'
+import {API_URL} from '../commonVars'
 class SingleUserComponent extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {selectedUser:{}};
 
     this.updateThing = this.updateThing.bind(this);
+  }
+
+  componentDidMount(){
+    axios.get(API_URL+'/persons/'+this.props.match.params.personId)
+    .then((res)=>{this.setState({selectedUser:res.data})})
   }
 
   updateThing(payload) {
@@ -22,14 +28,12 @@ class SingleUserComponent extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.selectedUser.name ? (
           <div>
             <div className="thingCard">
               <h3>Selected Person:</h3>
               <div className="info">
                 <div className="people">
-                  <h3>{this.props.selectedUser.name}</h3>
+                  <h3>{this.state.selectedUser.name}</h3>
                 </div>
               </div>
               <div className="buttons">
@@ -41,15 +45,13 @@ class SingleUserComponent extends Component {
             <Button
               color="yellow"
               onClick={() => {
-                history.push("/admin/users/singleuser/assignments");
+                history.push('./'+this.state.selectedUser.id+'/assignments');
               }}
             >
               See this person's assignments
             </Button>
-            <AddAssignmentCard person={this.props.selectedUser} />
+            <AddAssignmentCard person={this.state.selectedUser} />
           </div>
-        ) : null}
-      </div>
     );
   }
 }

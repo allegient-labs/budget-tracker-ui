@@ -31,6 +31,8 @@ class PersonCard extends React.Component {
           <label color="white">Name</label>
           <Form.Field>
             <Form.Input
+                      defaultValue="Bob"
+
               name="name"
               placeholder={"Insert Name"}
               required

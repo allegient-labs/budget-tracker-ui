@@ -3,45 +3,46 @@ import axios from "axios";
 import { Button, Dropdown } from "semantic-ui-react";
 import EditProjectCard from "./EditProjectCard";
 import { API_URL } from "../commonVars";
-
+import EnhancedCUDModal from '../utils/EnhancedCUDModal'
+import ProjectCard from '../utils/ProjectCard'
 class SingleProjectComponent extends Component {
   constructor() {
     super();
     this.state = {
+      selectedProject:{},
       showEdit: false,
       clients: [],
       clientsDropDown: [],
       selectedDropdownURI: "",
-      clientURI: "",
-      linkedClient: {}
+      linkedClient: {},
+
     };
-    this.updateThing = this.updateThing.bind(this);
     this.getClients = this.getClients.bind(this);
     this.getClientRelation = this.getClientRelation.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
+    this.getProject=this.getProject.bind(this)
+    this.updateProject=this.updateProject.bind(this)
   }
 
   componentDidMount() {
+    this.getProject();
     this.getClients();
-    this.getClientRelation();
   }
 
-  updateThing(url, closeFunc, payload, callback) {
-    var updatedPayload = Object.assign(this.props.selectedProject, payload);
-    axios
-      .put(url.href, updatedPayload)
-      .then(res => {
-        callback(res.data._links.client.href);
-      })
-      .then(() => {
-        this.props.rerouteToSelectedProject(updatedPayload);
-      });
-    closeFunc();
+  getProject(){
+    axios.get(API_URL+'/projects/'+this.props.match.params.projectId)
+    .then((res)=>{this.setState({selectedProject:res.data}, this.getClientRelation)})
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps.selectedProject._links.client.href);
-    this.getClientRelation(nextProps.selectedProject._links.client.href);
+  getClientRelation() {
+    const clientURI = this.state.selectedProject._links.client.href
+    axios.get(clientURI)
+    .then(client => {
+      this.setState({ linkedClient: client.data });
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   getClients() {
@@ -60,25 +61,28 @@ class SingleProjectComponent extends Component {
     });
   }
 
-  getClientRelation(uri) {
-    const existing = this.props.selectedProject._links
-      ? this.props.selectedProject._links.client.href
-      : null;
-    const urizzle = uri ? uri : existing;
-
-    urizzle
-      ? this.setState({ clientURI: urizzle }, () => {
-          axios
-            .get(this.state.clientURI)
-            .then(client => {
-              this.setState({ linkedClient: client.data });
-            })
-            .catch(err => {
-              console.log(err);
-            });
+  updateProject(payload, selectedDropdownURI){
+    axios.put(this.state.selectedProject._links.self.href, payload)
+    .then(res=>{
+      const clientURI = res.data._links.client.href
+      axios({
+      method: "put",
+      url: clientURI,
+      data: selectedDropdownURI,
+      headers: { "Content-Type": "text/uri-list" }
+      })
+      .then(() => {
+        axios.get(clientURI)
+        .then(client => {
+          this.setState({ linkedClient: client.data });
         })
-      : null;
+        .catch(err => {
+          console.log(err);
+        });
+      });
+    })
   }
+
 
   changeHandler(evt, selection) {
     this.setState({ selectedDropdownURI: selection.value });
@@ -87,25 +91,24 @@ class SingleProjectComponent extends Component {
   render() {
     return (
       <div>
-        {this.props.selectedProject.name ? (
+        {this.state.selectedProject.name ? (
           <div>
             <h3>Edit Project Details</h3>
             <div className="projects">
-              <div>Name: {this.props.selectedProject.name}</div>
-              <div>Description: {this.props.selectedProject.description}</div>
-              <div>StartDate: {this.props.selectedProject.startDate}</div>
-              <div>EndDate: {this.props.selectedProject.endDate}</div>
+              <div>Name: {this.state.selectedProject.name}</div>
+              <div>Description: {this.state.selectedProject.description}</div>
+              <div>StartDate: {this.state.selectedProject.startDate}</div>
+              <div>EndDate: {this.state.selectedProject.endDate}</div>
               <div>Client:{this.state.linkedClient.name}</div>
               <br />
             </div>
             <div className="buttons">
-              <EditProjectCard
-                thingName="Project"
-                thing={this.props.selectedProject}
-                linkedClient={this.state.linkedClient}
-                updateF={this.updateThing}
-              />
-              <Button color="red" icon="erase" />
+              <EnhancedCUDModal crudType="edit">
+                <ProjectCard clientsDropDown={this.state.clientsDropDown} linkedClient={this.state.linkedClient} thing={this.state.selectedProject} submitAction={this.updateProject}/>
+              </EnhancedCUDModal>
+              <EnhancedCUDModal crudType="delete">
+                <ProjectCard/>
+              </EnhancedCUDModal>              
             </div>
           </div>
         ) : (
