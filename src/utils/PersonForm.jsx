@@ -5,7 +5,7 @@ import { Button, Header, Icon, Modal, Form } from "semantic-ui-react";
 *
 *props: submitAction
 */
-class PersonCard extends React.Component {
+class PersonForm extends React.Component {
   constructor() {
     super();
     this.state = {};
@@ -31,8 +31,6 @@ class PersonCard extends React.Component {
           <label color="white">Name</label>
           <Form.Field>
             <Form.Input
-                      defaultValue="Bob"
-
               name="name"
               placeholder={"Insert Name"}
               required
@@ -52,4 +50,4 @@ class PersonCard extends React.Component {
   }
 }
 
-export default PersonCard;
+export default PersonForm;

@@ -5,13 +5,13 @@ import { Button, Header, Icon, Modal, Form, Dropdown } from "semantic-ui-react";
 *
 *props: submitAction
 */
-class ProjectCard extends React.Component {
+class ProjectForm extends React.Component {
   constructor() {
     super();
     this.state = {selectedDropdownURI:""};
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.changeHandler=this.changeHandler.bind(this)
+    this.changeHandler=this.changeHandler.bind(this);
   }
 
   handleSubmit(evt) {
@@ -96,4 +96,4 @@ class ProjectCard extends React.Component {
   }
 }
 
-export default ProjectCard;
+export default ProjectForm;

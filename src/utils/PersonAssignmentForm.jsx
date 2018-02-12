@@ -9,9 +9,7 @@ class AddAssignmentCard extends React.Component {
   constructor() {
     super();
     this.state = {
-      modalOpen: false,
       name: "",
-      showEdit: false,
       practices: [],
       projects: [],
       allocation: "",
@@ -60,74 +58,45 @@ class AddAssignmentCard extends React.Component {
   }
 
   handleSubmit(evt) {
-    const form = {
-      allocation: evt.target.allocation.value,
-      billRate: evt.target.billrate.value,
-      forecastAllocation: evt.target.forecastallocation.value,
-      notes: evt.target.notes.value,
-      role: evt.target.role.value,
-      startDate: evt.target.startdate.value,
-      endDate: evt.target.enddate.value,
-      practiceURI: this.state.selectedPracticeURI,
-      projectURI: this.state.selectedProjectURI,
-      personURI: this.props.person._links.self.href
-    };
-    axios.post(API_URL + "/assignments", form).then(assignment => {
-      const arr1 = [
-        assignment.data._links.person.href,
-        assignment.data._links.project.href,
-        assignment.data._links.practice.href
-      ];
-      const arr2 = [
-        this.props.person._links.self.href,
-        this.state.selectedProjectURI,
-        this.state.selectedPracticeURI
-      ];
-      axios({
-        method: "put",
-        url: arr1[0],
-        data: arr2[0],
-        headers: { "Content-Type": "text/uri-list" }
-      })
-        .then(res => {
-          return axios({
-            method: "put",
-            url: arr1[1],
-            data: arr2[1],
-            headers: { "Content-Type": "text/uri-list" }
-          });
-        })
-        .then(res => {
-          return axios({
-            method: "put",
-            url: arr1[2],
-            data: arr2[2],
-            headers: { "Content-Type": "text/uri-list" }
-          });
-        })
-        .then(() => {
-          this.setState({
-            modalOpen: false,
-            name: "",
-            showEdit: false,
-            practices: [],
-            projects: [],
-            allocation: "",
-            billrate: "",
-            ForecastAllocation: "",
-            notes: "",
-            role: "",
-            startDate: 0,
-            endDate: 0,
-            selectedProjectURI: "",
-            selectedPracticeURI: ""
-          });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    });
-    this.handleClose();
+    if (!this.props.submitAction) {
+      console.log("Required props: submitAction fn");
+    } else {
+      let payload = null;
+      if (this.props.crudType !== "delete") {
+        payload = {
+          allocation: evt.target.allocation.value,
+          billRate: evt.target.billrate.value,
+          forecastAllocation: evt.target.forecastallocation.value,
+          notes: evt.target.notes.value,
+          role: evt.target.role.value,
+          startDate: evt.target.startdate.value,
+          endDate: evt.target.enddate.value,
+          practiceURI: this.state.selectedPracticeURI,
+          projectURI: this.state.selectedProjectURI,
+          personURI: this.props.person._links.self.href
+        };
+      }
+      this.props.submitAction(payload);
+      this.setState(
+        {
+          modalOpen: false,
+          name: "",
+          showEdit: false,
+          practices: [],
+          projects: [],
+          allocation: "",
+          billrate: "",
+          ForecastAllocation: "",
+          notes: "",
+          role: "",
+          startDate: 0,
+          endDate: 0,
+          selectedProjectURI: "",
+          selectedPracticeURI: ""
+        },
+        this.props.handleClose()
+      );
+    }
   }
 
   changeProjectHandler(evt, selection) {
@@ -139,22 +108,19 @@ class AddAssignmentCard extends React.Component {
   }
 
   render() {
+    const asmt = this.props.assignment ? this.props.assignment : {};
     return (
       <div>
-        <Button
-          color="orange"
-          icon="add"
-          onClick={() => {
-            this.setState({ showEdit: !this.state.showEdit });
-          }}
-        />
-        <div>Assign {this.props.person.name}</div>
-        {this.state.showEdit ? (
+        {this.props.crudType === "delete" ? (
+          <Button color="red" onClick={this.handleSubmit}>
+            Delete
+          </Button>
+        ) : (
           <Form onSubmit={this.handleSubmit}>
             <label>Project:</label>
             <Form.Field>
               <Dropdown
-                placeholder="Set Project"
+                placeholder={asmt.project ? asmt.project.name : "Set Project"}
                 fluid
                 search
                 selection
@@ -166,7 +132,7 @@ class AddAssignmentCard extends React.Component {
             <label>Practice:</label>
             <Form.Field>
               <Dropdown
-                placeholder="Set Practice"
+                placeholder={asmt.practice ? asmt.project.name : "Set Practice"}
                 fluid
                 search
                 selection
@@ -180,48 +146,69 @@ class AddAssignmentCard extends React.Component {
               <input
                 onChange={this.handleAllocation}
                 name="allocation"
+                defaultValue={asmt.allocation}
                 required
               />
             </Form.Field>
             <label>BillRate:</label>
             <Form.Field>
-              <input onChange={this.handleBillRate} name="billrate" required />
+              <input
+                onChange={this.handleBillRate}
+                name="billrate"
+                defaultValue={asmt.billRate}
+                required
+              />
             </Form.Field>
             <label>ForecastAllocation:</label>
             <Form.Field>
               <input
                 onChange={this.handleForecastAllocation}
                 name="forecastallocation"
+                defaultValue={asmt.forecastAllocation}
                 required
               />
             </Form.Field>
             <label>Notes:</label>
             <Form.Field>
-              <input onChange={this.handleNotes} name="notes" required />
+              <input
+                onChange={this.handleNotes}
+                name="notes"
+                defaultValue={asmt.notes}
+                required
+              />
             </Form.Field>
             <label>Role:</label>
             <Form.Field>
-              <input onChange={this.handleRole} name="role" required />
+              <input
+                onChange={this.handleRole}
+                name="role"
+                defaultValue={asmt.role}
+                required
+              />
             </Form.Field>
             <label>StartDate:</label>
             <Form.Field>
               <input
                 onChange={this.handleStartDate}
                 name="startdate"
+                defaultValue={asmt.startDate}
                 required
               />
             </Form.Field>
             <label>EndDate:</label>
             <Form.Field>
-              <input onChange={this.handleEndDate} name="enddate" required />
+              <input
+                onChange={this.handleEndDate}
+                name="enddate"
+                defaultValue={asmt.endDate}
+                required
+              />
             </Form.Field>
             <Button type="submit" color="green">
               <Icon name="checkmark" /> Submit
             </Button>
-            <br />
-            <br />
           </Form>
-        ) : null}
+        )}
       </div>
     );
   }

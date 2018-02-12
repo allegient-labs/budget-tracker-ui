@@ -5,9 +5,9 @@ import CreateButton from "../RoutesCRUD/Utils/CreateButton";
 import DeleteButton from "../RoutesCRUD/Utils/DeleteButton";
 import { API_URL } from "../commonVars";
 import EditPeopleCard from "../RoutesCRUD/People/EditPeopleCard";
-import EnhancedCUDModal from '../utils/EnhancedCUDModal'
-import PersonCard from '../utils/PersonCard'
-import history from '../history'
+import EnhancedCUDModal from "../utils/EnhancedCUDModal";
+import PersonForm from "../utils/PersonForm";
+import history from "../history";
 
 class UsersComponent extends Component {
   constructor() {
@@ -55,12 +55,10 @@ class UsersComponent extends Component {
     this.getThings(this.state.prevURL);
   }
 
-  createPerson(payload){
-    console.log(payload)
-    axios.post(API_URL + "/persons", payload)
-    .then(res=>{
-      this.getThings()
-    })
+  createPerson(payload) {
+    axios.post(API_URL + "/persons", payload).then(res => {
+      this.getThings();
+    });
   }
 
   selectPerson(thing) {
@@ -77,7 +75,7 @@ class UsersComponent extends Component {
         <div className="thing">
           <h3>Select a Person</h3>
           <EnhancedCUDModal crudType="create">
-            <PersonCard submitAction={this.createPerson}/>
+            <PersonForm submitAction={this.createPerson} />
           </EnhancedCUDModal>
           {this.state.things.length ? (
             this.state.things.map((thing, i) => {
@@ -95,7 +93,9 @@ class UsersComponent extends Component {
                         <Button
                           color="blue"
                           icon="arrow circle right"
-                          onClick={()=>{history.push('./persons/'+thing.id)}}
+                          onClick={() => {
+                            history.push("./persons/" + thing.id);
+                          }}
                         />
                       )}
                     </div>

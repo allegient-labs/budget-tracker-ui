@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import SingleUserAssignmentsComponent from "../SingleUserAssignmentsComponent";
+import SingleAssignmentComponent from "../SingleAssignmentComponent";
 import { setSelectedUser } from "../../actions";
 import { withRouter } from "react-router-dom";
 
@@ -16,5 +16,5 @@ const mapDispatch = dispatch => {
 };
 
 export default withRouter(
-  connect(mapState, mapDispatch)(SingleUserAssignmentsComponent)
+  connect(mapState, mapDispatch)(SingleAssignmentComponent)
 );
