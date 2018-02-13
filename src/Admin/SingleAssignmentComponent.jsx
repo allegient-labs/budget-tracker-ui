@@ -3,7 +3,8 @@ import axios from "axios";
 import { Button } from "semantic-ui-react";
 import history from "../history.jsx";
 import { API_URL } from "../commonVars";
-import EnhancedCUDModal from "../utils/EnhancedCUDModal";
+import EnhancedUpdateModal from '../utils/EnhancedUpdateModal'
+import EnhancedDeleteModal from '../utils/EnhancedDeleteModal'
 import PersonAssignmentForm from "../utils/PersonAssignmentForm";
 
 class SingleUserComponent extends Component {
@@ -37,6 +38,7 @@ class SingleUserComponent extends Component {
   }
 
   editAssignment(payLoad) {
+    console.log(this.state.assignment)
     axios.put(this.state.assignment._links.self.href).then(() => {
       this.getAssignment();
     });
@@ -58,15 +60,15 @@ class SingleUserComponent extends Component {
             <div>{"Forecast Allocation: " + assign.forecastAllocation}</div>
             <div>{"Start Date: " + assign.startDate}</div>
             <div>{"End Date: " + assign.endDate}</div>
-            <EnhancedCUDModal crudType="edit">
+            <EnhancedUpdateModal>
               <PersonAssignmentForm
                 assignment={this.state.assignment}
                 submitAction={this.editAssignment}
               />
-            </EnhancedCUDModal>
-            <EnhancedCUDModal crudType="delete">
+            </EnhancedUpdateModal>
+            <EnhancedDeleteModal crudType="delete">
               <PersonAssignmentForm submitAction={this.handleDelete} />
-            </EnhancedCUDModal>
+            </EnhancedDeleteModal>
             <br />
           </div>
         ) : (

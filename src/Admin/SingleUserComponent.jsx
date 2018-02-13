@@ -4,7 +4,8 @@ import { Button } from "semantic-ui-react";
 import EditPeopleCard from "./EditPeopleCard";
 import AddAssignmentCard from "./AddAssignmentCard";
 import history from "../history.jsx";
-import EnhancedCUDModal from '../utils/EnhancedCUDModal'
+import EnhancedUpdateModal from '../utils/EnhancedUpdateModal'
+import EnhancedCreateModal from '../utils/EnhancedCreateModal'
 import PersonForm from '../utils/PersonForm'
 import PersonAssignmentForm from '../utils/PersonAssignmentForm'
 import {API_URL} from '../commonVars'
@@ -15,9 +16,14 @@ class SingleUserComponent extends Component {
 
     this.updateThing = this.updateThing.bind(this);
     this.submitThing=this.submitThing.bind(this)
+    this.getPerson=this.getPerson.bind(this)
   }
 
   componentDidMount(){
+    this.getPerson()
+  }
+
+  getPerson(){
     axios.get(API_URL+'/persons/'+this.props.match.params.personId)
     .then((res)=>{this.setState({selectedUser:res.data})})
 
@@ -98,7 +104,6 @@ class SingleUserComponent extends Component {
           endDate:0,
           selectedProjectURI:"",
           selectedPracticeURI:""})
-        
       })
       .catch((err)=>{console.log(err)})
     })
@@ -107,7 +112,7 @@ class SingleUserComponent extends Component {
 
   updateThing(payload) {
     axios.put(this.state.selectedUser._links.self.href, payload).then(res => {
-      this.props.setSelectedUser(payload);
+      this.getPerson()
     });
   }
 
@@ -122,17 +127,17 @@ class SingleUserComponent extends Component {
                 </div>
               </div>
               <div className="buttons">
-                <EnhancedCUDModal crudType="edit">
+                <EnhancedUpdateModal thingName="Assignment">
                   <PersonForm submitAction={this.updateThing}/>
-                </EnhancedCUDModal> 
+                </EnhancedUpdateModal> 
               </div>
             </div>
             <br/>
             <div>
               <h3>Current Assignments</h3>
-              <EnhancedCUDModal crudType="create" thingName="Assignment">
+              <EnhancedCreateModal thingName="Assignment">
                 <PersonAssignmentForm person={this.state.selectedUser} getAssignments={this.getAssignments} submitAction={this.submitThing}/>
-              </EnhancedCUDModal>                 
+              </EnhancedCreateModal>                 
               {this.state.assignments.map((asmt, i)=>{
                 return (<div key={i} className="thingCard"><h3>Role: {asmt.role} - Project: {asmt.project?asmt.project.name:null} - Client: {asmt.client?asmt.client.name:null}</h3><Button
                         color="blue"

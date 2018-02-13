@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Header, Icon, Modal, Form, Dropdown } from "semantic-ui-react";
+import axios from 'axios'
+import {API_URL} from '../commonVars'
 /**
 *This component enables the inclusion of certain modal properties by props and passes modal close handler to children
 *
@@ -8,23 +10,43 @@ import { Button, Header, Icon, Modal, Form, Dropdown } from "semantic-ui-react";
 class ProjectForm extends React.Component {
   constructor() {
     super();
-    this.state = {selectedDropdownURI:""};
+    this.state = {
+      selectedDropdownURI:"",
+      clientsDropDown:[]
+  };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.changeHandler=this.changeHandler.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+    this.getClients = this.getClients.bind(this);
+  }
+
+  componentDidMount(){
+    this.getClients()
   }
 
   handleSubmit(evt) {
     if(!this.props.submitAction){
       console.log("Required props: submitAction fn")
     }else{
-      if(this.props.crudType==="delete"){
-        console.log("delete not implemented")
-      }else{
-        this.props.submitAction({name:evt.target.name.value, description:evt.target.description.value, startDate:evt.target.startDate.value, endDate:evt.target.endDate.value}, this.state.selectedDropdownURI)
-        this.props.handleClose()
-      }
+      this.props.submitAction({name:evt.target.name.value, description:evt.target.description.value, startDate:evt.target.startDate.value, endDate:evt.target.endDate.value}, this.state.selectedDropdownURI)
+      this.props.handleClose()
     }
+  }
+
+  getClients() {
+    axios.get(API_URL + "/clients").then(clients => {
+      this.setState({ clients: clients.data._embedded.clients }, () => {
+        var arr = [];
+        this.state.clients.map((client, i) => {
+          arr.push({
+            key: i,
+            text: client.name,
+            value: client._links.self.href
+          });
+        });
+        this.setState({ clientsDropDown: arr });
+      });
+    });
   }
 
   changeHandler(evt, selection) {
@@ -73,13 +95,13 @@ class ProjectForm extends React.Component {
           </Form.Field>          
           <Form.Field>
             <Dropdown
-              placeholder={this.props.linkedClient.name}
+              placeholder={this.props.linkedClient?this.props.linkedClient.name:null}
               fluid
               search
               selection
               name="client"
               onChange={this.changeHandler}
-              options={this.props.clientsDropDown}
+              options={this.state.clientsDropDown}
             />
           </Form.Field>          
           <br/>

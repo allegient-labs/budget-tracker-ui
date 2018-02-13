@@ -3,7 +3,8 @@ import axios from "axios";
 import { Button, Dropdown } from "semantic-ui-react";
 import EditProjectCard from "./EditProjectCard";
 import { API_URL } from "../commonVars";
-import EnhancedCUDModal from "../utils/EnhancedCUDModal";
+import EnhancedUpdateModal from "../utils/EnhancedUpdateModal";
+import EnhancedDeleteModal from "../utils/EnhancedDeleteModal";
 import ProjectForm from "../utils/ProjectForm";
 class SingleProjectComponent extends Component {
   constructor() {
@@ -106,17 +107,17 @@ class SingleProjectComponent extends Component {
               <br />
             </div>
             <div className="buttons">
-              <EnhancedCUDModal crudType="edit">
+              <EnhancedUpdateModal crudType="edit">
                 <ProjectForm
                   clientsDropDown={this.state.clientsDropDown}
                   linkedClient={this.state.linkedClient}
                   thing={this.state.selectedProject}
                   submitAction={this.updateProject}
                 />
-              </EnhancedCUDModal>
-              <EnhancedCUDModal crudType="delete">
+              </EnhancedUpdateModal>
+              <EnhancedDeleteModal crudType="delete">
                 <ProjectForm />
-              </EnhancedCUDModal>
+              </EnhancedDeleteModal>
             </div>
           </div>
         ) : (
