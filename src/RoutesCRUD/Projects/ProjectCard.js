@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './Projects.css'
+import React, { Component } from "react";
+import "./Projects.css";
 
 class ProjectCard extends Component {
   render() {
@@ -9,8 +9,8 @@ class ProjectCard extends Component {
         <div>Description: {this.props.thing.description}</div>
         <div>EndDate: {this.props.thing.endDate}</div>
         <div>Name: {this.props.thing.name}</div>
-        <div>StartDate: {this.props.thing.startDate}</div>  
-        <br/>      
+        <div>StartDate: {this.props.thing.startDate}</div>
+        <br />
       </div>
     );
   }

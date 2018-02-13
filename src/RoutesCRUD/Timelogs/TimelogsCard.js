@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class TimelogsCard extends Component {
   render() {
@@ -6,8 +6,8 @@ class TimelogsCard extends Component {
       <div className="projects">
         <div>Date: {this.props.thing.date}</div>
         <div>Description: {this.props.thing.description}</div>
-        <div>Hours: {this.props.thing.hours}</div>  
-        <br/>    
+        <div>Hours: {this.props.thing.hours}</div>
+        <br />
       </div>
     );
   }

@@ -1,19 +1,20 @@
-import { connect } from 'react-redux'
-import SingleProjectComponent from '../SingleProjectComponent'
-import {rerouteToSelectedProject} from '../../actions'
-import {withRouter} from 'react-router-dom'
+import { connect } from "react-redux";
+import SingleProjectComponent from "../SingleProjectComponent";
+import { rerouteToSelectedProject } from "../../actions";
+import { withRouter } from "react-router-dom";
 
-const mapState = (state) => ({
-  selectedProject:state.projects.selectedProject
+const mapState = state => ({
+  selectedProject: state.projects.selectedProject
 });
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    rerouteToSelectedProject(project){
-      dispatch(rerouteToSelectedProject(project))
+    rerouteToSelectedProject(project) {
+      dispatch(rerouteToSelectedProject(project));
     }
-  }
-}
+  };
+};
 
-
-export default withRouter(connect(mapState, mapDispatch)(SingleProjectComponent));
+export default withRouter(
+  connect(mapState, mapDispatch)(SingleProjectComponent)
+);

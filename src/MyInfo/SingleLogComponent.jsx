@@ -1,10 +1,9 @@
-
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class SingleLogComponent extends Component {
-  constructor(){
-    super()
-    this.state={}
+  constructor() {
+    super();
+    this.state = {};
   }
 
   render() {

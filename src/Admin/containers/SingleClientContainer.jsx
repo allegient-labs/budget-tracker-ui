@@ -1,22 +1,23 @@
-import { connect } from 'react-redux'
-import SingleClientComponent from '../SingleClientComponent'
-import {rerouteToSelectedClient, setSelectedClient} from '../../actions'
-import {withRouter} from 'react-router-dom'
+import { connect } from "react-redux";
+import SingleClientComponent from "../SingleClientComponent";
+import { rerouteToSelectedClient, setSelectedClient } from "../../actions";
+import { withRouter } from "react-router-dom";
 
-const mapState = (state) => ({
-  selectedClient:state.clients.selectedClient
+const mapState = state => ({
+  selectedClient: state.clients.selectedClient
 });
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    rerouteToSelectedClient(client){
-      dispatch(rerouteToSelectedClient(client))
+    rerouteToSelectedClient(client) {
+      dispatch(rerouteToSelectedClient(client));
     },
-    setSelectedClient(client){
-      dispatch(setSelectedClient(client))
+    setSelectedClient(client) {
+      dispatch(setSelectedClient(client));
     }
-  }
-}
+  };
+};
 
-
-export default withRouter(connect(mapState, mapDispatch)(SingleClientComponent));
+export default withRouter(
+  connect(mapState, mapDispatch)(SingleClientComponent)
+);
