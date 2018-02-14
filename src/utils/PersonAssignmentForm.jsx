@@ -1,27 +1,29 @@
-import React from "react";
-import { Button, Header, Icon, Modal, Form, Dropdown } from "semantic-ui-react";
-import axios from "axios";
-import { API_URL } from "../commonVars";
-import history from "../history.jsx";
+import React from 'react';
+import { Button, Header, Icon, Modal, Form, Dropdown } from 'semantic-ui-react';
+import axios from 'axios';
+import { API_URL } from '../commonVars';
+import history from '../history.jsx';
 
 //requires a thing prop, an updateF prop, a thingName prop
 class AddAssignmentCard extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: "",
+      name: '',
       practices: [],
       projects: [],
-      allocation: "",
-      billrate: "",
-      ForecastAllocation: "",
-      notes: "",
-      role: "",
+      allocation: '',
+      billrate: '',
+      ForecastAllocation: '',
+      notes: '',
+      role: '',
       startDate: 0,
       endDate: 0,
-      selectedProjectURI: "",
-      selectedPracticeURI: ""
+      selectedProjectURI: '',
+      selectedPracticeURI: '',
+      message: ''
     };
+
     this.changeProjectHandler = this.changeProjectHandler.bind(this);
     this.changePracticeHandler = this.changePracticeHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,7 +35,7 @@ class AddAssignmentCard extends React.Component {
   }
 
   getProjects() {
-    axios.get(API_URL + "/projects?size=100").then(res => {
+    axios.get(API_URL + '/projects?size=100').then(res => {
       const projects = res.data._embedded.project;
       const builtDropdown = projects.map((project, i) => {
         return { key: i, text: project.name, value: project._links.self.href };
@@ -43,7 +45,7 @@ class AddAssignmentCard extends React.Component {
   }
 
   getPractices() {
-    axios.get(API_URL + "/practices?size=50").then(res => {
+    axios.get(API_URL + '/practices?size=50').then(res => {
       const practices = res.data._embedded.practices;
       const builtDropdown = practices.map((practice, i) => {
         return {
@@ -57,45 +59,63 @@ class AddAssignmentCard extends React.Component {
     });
   }
 
+  verifyPayload(form) {
+    if (!form.projectURI && !form.practiceURI) {
+      this.setState({
+        message: 'Must select project and practice from dropdowns'
+      });
+      return false;
+    } else if (!form.projectURI) {
+      this.setState({ message: 'No project has been selected' });
+      return false;
+    } else if (!form.practiceURI) {
+      this.setState({ message: 'No practice has been selected' });
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   handleSubmit(evt) {
     if (!this.props.submitAction) {
-      console.log("Required props: submitAction fn");
+      console.log('Required props: submitAction fn');
     } else {
-      let payload = null;
-      if (this.props.crudType !== "delete") {
-        payload = {
-          allocation: evt.target.allocation.value,
-          billRate: evt.target.billrate.value,
-          forecastAllocation: evt.target.forecastallocation.value,
-          notes: evt.target.notes.value,
-          role: evt.target.role.value,
-          startDate: evt.target.startdate.value,
-          endDate: evt.target.enddate.value,
-          practiceURI: this.state.selectedPracticeURI,
-          projectURI: this.state.selectedProjectURI,
-          personURI: this.props.person._links.self.href
-        };
+      const payload = {
+        allocation: evt.target.allocation.value,
+        billRate: evt.target.billrate.value,
+        forecastAllocation: evt.target.forecastallocation.value,
+        notes: evt.target.notes.value,
+        role: evt.target.role.value,
+        startDate: evt.target.startdate.value,
+        endDate: evt.target.enddate.value,
+        practiceURI: this.state.selectedPracticeURI,
+        projectURI: this.state.selectedProjectURI,
+        personURI: this.props.person
+          ? this.props.person._links.self.href
+          : undefined
+      };
+      if (this.verifyPayload(payload)) {
+        this.props.submitAction(payload);
+        this.setState(
+          {
+            modalOpen: false,
+            name: '',
+            showEdit: false,
+            practices: [],
+            projects: [],
+            allocation: '',
+            billrate: '',
+            ForecastAllocation: '',
+            notes: '',
+            role: '',
+            startDate: 0,
+            endDate: 0,
+            selectedProjectURI: '',
+            selectedPracticeURI: ''
+          },
+          this.props.handleClose()
+        );
       }
-      this.props.submitAction(payload);
-      this.setState(
-        {
-          modalOpen: false,
-          name: "",
-          showEdit: false,
-          practices: [],
-          projects: [],
-          allocation: "",
-          billrate: "",
-          ForecastAllocation: "",
-          notes: "",
-          role: "",
-          startDate: 0,
-          endDate: 0,
-          selectedProjectURI: "",
-          selectedPracticeURI: ""
-        },
-        this.props.handleClose()
-      );
     }
   }
 
@@ -111,7 +131,7 @@ class AddAssignmentCard extends React.Component {
     const asmt = this.props.assignment ? this.props.assignment : {};
     return (
       <div>
-        {this.props.crudType === "delete" ? (
+        {this.props.crudType === 'delete' ? (
           <Button color="red" onClick={this.handleSubmit}>
             Delete
           </Button>
@@ -120,7 +140,7 @@ class AddAssignmentCard extends React.Component {
             <label>Project:</label>
             <Form.Field>
               <Dropdown
-                placeholder={asmt.project ? asmt.project.name : "Set Project"}
+                placeholder={asmt.project ? asmt.project.name : 'Set Project'}
                 fluid
                 search
                 selection
@@ -132,7 +152,7 @@ class AddAssignmentCard extends React.Component {
             <label>Practice:</label>
             <Form.Field>
               <Dropdown
-                placeholder={asmt.practice ? asmt.project.name : "Set Practice"}
+                placeholder={asmt.practice ? asmt.project.name : 'Set Practice'}
                 fluid
                 search
                 selection
@@ -209,6 +229,7 @@ class AddAssignmentCard extends React.Component {
             </Button>
           </Form>
         )}
+        {this.state.message ? <h3>{this.state.message}</h3> : null}
       </div>
     );
   }
