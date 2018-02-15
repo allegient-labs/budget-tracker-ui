@@ -1,39 +1,29 @@
-import React, { Component } from "react";
-import { Router, Route } from "react-router-dom";
-import "./App.css";
-import history from "./history";
-import { Provider } from "react-redux";
+import React, { Component } from 'react';
+import { Router, Route } from 'react-router-dom';
+import './App.css';
+import history from './history';
+import { Provider } from 'react-redux';
+import Header from './Header';
 
-import AboutComponent from "./RoutesCRUD/About/AboutComponent";
-import PeopleComponent from "./RoutesCRUD/People/PeopleComponent";
-import TimeoffsComponent from "./RoutesCRUD/Timeoffs/TimeoffsComponent";
-import PracticeComponent from "./RoutesCRUD/Practice/PracticeComponent";
-import BudgetsComponent from "./RoutesCRUD/Budgets/BudgetsComponent";
-import TimelogsComponent from "./RoutesCRUD/Timelogs/TimelogsComponent";
-import CRUDProjectsComponent from "./RoutesCRUD/Projects/ProjectsComponent";
-import AssignmentsComponent from "./RoutesCRUD/Assignments/AssignmentsComponent";
-
-import Header from "./Header";
-
-import StatsComponent from "./Stats/StatsComponent";
-import ProjectComponent from "./Project/ProjectComponent";
-import AdminComponent from "./Admin/AdminComponent";
-import PersonsContainer from "./Admin/containers/UsersContainer";
-import SinglePersonContainer from "./Admin/containers/SingleUserContainer";
-import ProjectsContainer from "./Admin/containers/ProjectsContainer";
-import SingleProjectContainer from "./Admin/containers/SingleProjectContainer";
-import ClientsContainer from "./Admin/containers/ClientsContainer";
-import SingleClientContainer from "./Admin/containers/SingleClientContainer";
-import SingleAssignmentContainer from "./Admin/containers/SingleAssignmentContainer";
-import HolidaysComponent from "./Admin/HolidaysComponent";
-import ProfileComponent from "./MyInfo/ProfileComponent";
-import OffsComponent from "./MyInfo/OffsComponent";
-import SingleOffComponent from "./MyInfo/SingleOffComponent";
-import LogsComponent from "./MyInfo/LogsComponent";
-import SingleLogComponent from "./MyInfo/SingleLogComponent";
-import InfoComponent from "./MyInfo/InfoComponent";
-
-import configureStore from "./store";
+import StatsComponent from './Stats/StatsComponent';
+import ProjectComponent from './Project/ProjectComponent';
+import AdminComponent from './Admin/AdminComponent';
+import PersonsContainer from './Admin/containers/UsersContainer';
+import SinglePersonContainer from './Admin/containers/SingleUserContainer';
+import ProjectsContainer from './Admin/containers/ProjectsContainer';
+import SingleProjectContainer from './Admin/containers/SingleProjectContainer';
+import ClientsContainer from './Admin/containers/ClientsContainer';
+import SingleClientContainer from './Admin/containers/SingleClientContainer';
+import SingleAssignmentContainer from './Admin/containers/SingleAssignmentContainer';
+import HolidaysComponent from './Admin/HolidaysComponent';
+import ProfileComponent from './MyInfo/ProfileComponent';
+import OffsComponent from './MyInfo/OffsComponent';
+import SingleOffComponent from './MyInfo/SingleOffComponent';
+import LogsComponent from './MyInfo/LogsComponent';
+import SingleLogComponent from './MyInfo/SingleLogComponent';
+import InfoComponent from './MyInfo/InfoComponent';
+import AboutComponent from './AboutComponent';
+import configureStore from './store';
 const store = configureStore();
 
 class App extends Component {
@@ -44,23 +34,6 @@ class App extends Component {
           <div className="App">
             <Header />
             <div className="App-intro">
-              <Route exact path="/" component={AboutComponent} />
-              <Route exact path="/personscrud" component={PeopleComponent} />
-              <Route exact path="/timeoffs" component={TimeoffsComponent} />
-              <Route exact path="/practice" component={PracticeComponent} />
-              <Route exact path="/budgets" component={BudgetsComponent} />
-              <Route exact path="/timelogs" component={TimelogsComponent} />
-              <Route
-                exact
-                path="/projectscrud"
-                component={CRUDProjectsComponent}
-              />
-              <Route
-                exact
-                path="/assignments"
-                component={AssignmentsComponent}
-              />
-
               <Route exact path="/stats" component={StatsComponent} />
               <Route exact path="/projects" component={ProjectComponent} />
 

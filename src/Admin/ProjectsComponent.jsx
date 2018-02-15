@@ -1,14 +1,10 @@
-import React, { Component } from "react";
-import axios from "axios";
-import CreateButton from "../RoutesCRUD/Utils/CreateButton";
-import DeleteButton from "../RoutesCRUD/Utils/DeleteButton";
-import { API_URL } from "../commonVars";
-import EditPeopleCard from "../RoutesCRUD/People/EditPeopleCard";
-import CreateProject from "./CreateProject";
-import { Button, Image, List } from "semantic-ui-react";
-import history from "../history";
-import EnhancedCreateModal from "../utils/EnhancedCreateModal";
-import ProjectForm from "../utils/ProjectForm";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { API_URL } from '../commonVars';
+import { Button } from 'semantic-ui-react';
+import history from '../history';
+import EnhancedCreateModal from '../utils/EnhancedCreateModal';
+import ProjectForm from '../utils/ProjectForm';
 
 class ProjectsComponent extends Component {
   constructor() {
@@ -18,8 +14,8 @@ class ProjectsComponent extends Component {
       currPageNo: 0,
       totalPages: 0,
       isNext: false,
-      nextURL: "",
-      prevURL: "",
+      nextURL: '',
+      prevURL: '',
       modalOpen: false
     };
 
@@ -33,11 +29,11 @@ class ProjectsComponent extends Component {
   }
 
   getThings(url) {
-    axios.get(API_URL + "/projects").then(things => {
+    axios.get(API_URL + '/projects').then(things => {
       this.setState({
         totalPages: things.data.page.totalPages,
         currPageNo: things.data.page.number,
-        things: things.data._embedded["project"],
+        things: things.data._embedded['project'],
         nextURL: things.data._links.next,
         prevURL: things.data._links.prev
       });
@@ -65,19 +61,20 @@ class ProjectsComponent extends Component {
   }
 
   createThing(payload, selectedDropdownURI) {
-    const nav_url =  API_URL + "/projects";
-    axios.post(nav_url, payload)
-    .then(res => {
-      axios({
-            method: "put",
-            url: res.data._links.client.href,
-            data: selectedDropdownURI,
-            headers: { "Content-Type": "text/uri-list" }
-          })
-    })
-    .then(() => {
-      this.getThings();
-    });
+    const nav_url = API_URL + '/projects';
+    axios
+      .post(nav_url, payload)
+      .then(res => {
+        axios({
+          method: 'put',
+          url: res.data._links.client.href,
+          data: selectedDropdownURI,
+          headers: { 'Content-Type': 'text/uri-list' }
+        });
+      })
+      .then(() => {
+        this.getThings();
+      });
   }
 
   selectPerson(thing) {
@@ -112,7 +109,7 @@ class ProjectsComponent extends Component {
                         color="blue"
                         icon="arrow circle right"
                         onClick={() => {
-                          history.push("/admin/projects/" + thing.id);
+                          history.push('/admin/projects/' + thing.id);
                         }}
                       />
                     </div>

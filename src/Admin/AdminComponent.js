@@ -1,8 +1,5 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Button } from "semantic-ui-react";
-import UsersComponent from "./UsersComponent";
-import { NavLink } from "react-router-dom";
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 class AdminComponent extends Component {
   constructor() {

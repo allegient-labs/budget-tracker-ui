@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Header, Icon, Modal, Form, Dropdown } from 'semantic-ui-react';
+import { Button, Icon, Modal, Form, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import { API_URL } from '../commonVars';
 /**
@@ -51,7 +51,7 @@ class ProjectForm extends React.Component {
       this.setState({ clients: clients.data._embedded.clients }, () => {
         var arr = [];
         this.state.clients.map((client, i) => {
-          arr.push({
+          return arr.push({
             key: i,
             text: client.name,
             value: client._links.self.href

@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Button } from "semantic-ui-react";
-import EditPeopleCard from "./EditPeopleCard";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Button } from 'semantic-ui-react';
 
 class SingleClientComponent extends Component {
   constructor() {
@@ -30,35 +29,21 @@ class SingleClientComponent extends Component {
   render() {
     return (
       <div>
-        {this.props.selectedClient.name ? (
-          <div>
-            <div className="thingCard">
-              <h3>Selected Client:</h3>
-              <div className="info">
-                <div className="people">
-                  <h3>
-                    {this.props.selectedClient.name
-                      ? this.props.selectedClient.name
-                      : "No Client Selected"}
-                  </h3>
-                </div>
-              </div>
-              <div className="buttons">
-                <EditPeopleCard
-                  thingName="Client"
-                  thing={this.props.selectedClient}
-                  updateF={this.updateThing}
-                />
-              </div>
-              <br />
+        <div className="thingCard">
+          <h3>Selected Client:</h3>
+          <div className="info">
+            <div className="people">
+              <h3 />
             </div>
-            <Button color="yellow" onClick={this.toggleShowHolidays}>
-              Manage Client Holidays
-            </Button>
-            {this.state.showHolidays ? (
-              <div>Manage Holidays not yet implemented</div>
-            ) : null}
           </div>
+          <div className="buttons" />
+          <br />
+        </div>
+        <Button color="yellow" onClick={this.toggleShowHolidays}>
+          Manage Client Holidays
+        </Button>
+        {this.state.showHolidays ? (
+          <div>Manage Holidays not yet implemented</div>
         ) : null}
       </div>
     );

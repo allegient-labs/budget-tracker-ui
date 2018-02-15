@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Dropdown } from 'semantic-ui-react';
-import EditProjectCard from './EditProjectCard';
 import { API_URL } from '../commonVars';
 import EnhancedUpdateModal from '../utils/EnhancedUpdateModal';
 import EnhancedDeleteModal from '../utils/EnhancedDeleteModal';
@@ -54,7 +52,7 @@ class SingleProjectComponent extends Component {
       this.setState({ clients: clients.data._embedded.clients }, () => {
         var arr = [];
         this.state.clients.map((client, i) => {
-          arr.push({
+          return arr.push({
             key: i,
             text: client.name,
             value: client._links.self.href

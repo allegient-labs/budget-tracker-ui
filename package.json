@@ -5,12 +5,15 @@
   "dependencies": {
     "auto-bind": "^1.2.0",
     "axios": "^0.17.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint-plugin-react": "^7.6.1",
     "husky": "^0.14.3",
     "lint-staged": "^6.1.0",
     "moment": "^2.20.1",
     "react": "^16.2.0",
     "react-big-calendar": "^0.18.0",
+    "react-datepicker": "^1.1.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
@@ -19,16 +22,17 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "semantic-ui-css": "^2.2.12",
-    "semantic-ui-react": "^0.77.2"
+    "semantic-ui-react": "^0.77.2",
+    "sinon": "^4.3.0"
   },
-   "lint-staged": {
-     "src/**/*.{js,jsx,json,css}": [
-       "prettier --single-quote --write",
-       "git add"
-     ]
-   },  
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
   "scripts": {
-    "precommit": "lint-staged",    
+    "precommit": "lint-staged",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
