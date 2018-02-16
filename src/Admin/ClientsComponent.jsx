@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Button } from 'semantic-ui-react';
 import { API_URL } from '../commonVars';
+import history from '../history';
 
 class ClientsComponent extends Component {
   constructor() {
     super();
     this.state = {
       things: [],
-      deletesShown: false,
       currPageNo: 0,
       totalPages: 0,
       isNext: false,
@@ -20,15 +20,12 @@ class ClientsComponent extends Component {
     this.updateThing = this.updateThing.bind(this);
     this.createThing = this.createThing.bind(this);
     this.getThings = this.getThings.bind(this);
-    this.showDeletes = this.showDeletes.bind(this);
     this.toPrevPage = this.toPrevPage.bind(this);
     this.toNextPage = this.toNextPage.bind(this);
-    this.selectPerson = this.selectPerson.bind(this);
-    this.unselectPerson = this.unselectPerson.bind(this);
   }
 
   getThings(url) {
-    const nav_url = url ? url.href : API_URL + '/clients';
+    const nav_url = API_URL + '/clients';
 
     axios.get(nav_url).then(things => {
       this.setState({
@@ -43,14 +40,6 @@ class ClientsComponent extends Component {
 
   componentDidMount() {
     this.getThings();
-  }
-
-  showDeletes() {
-    if (this.state.deletesShown) {
-      this.setState({ deletesShown: false });
-    } else {
-      this.setState({ deletesShown: true });
-    }
   }
 
   toNextPage() {
@@ -84,14 +73,6 @@ class ClientsComponent extends Component {
     closeFunc();
   }
 
-  selectPerson(thing) {
-    this.props.rerouteToSelectedClient(thing);
-  }
-
-  unselectPerson() {
-    this.setState({ selectedClient: {} });
-  }
-
   render() {
     return (
       <div>
@@ -109,13 +90,13 @@ class ClientsComponent extends Component {
                   </div>
                   <div className="buttons">
                     <div className="buttons">
-                      {this.state.deletesShown ? null : (
-                        <Button
-                          color="blue"
-                          icon="arrow circle right"
-                          onClick={this.selectPerson.bind(this, thing)}
-                        />
-                      )}
+                      <Button
+                        color="blue"
+                        icon="arrow circle right"
+                        onClick={() => {
+                          history.push('./clients/' + thing.id);
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
