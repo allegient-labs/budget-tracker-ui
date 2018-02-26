@@ -5,7 +5,7 @@ import { Button, Header, Icon, Modal, Form } from "semantic-ui-react";
 *
 *props: submitAction
 */
-class PersonCard extends React.Component {
+class PersonForm extends React.Component {
   constructor() {
     super();
     this.state = {};
@@ -50,4 +50,4 @@ class PersonCard extends React.Component {
   }
 }
 
-export default PersonCard;
+export default PersonForm;

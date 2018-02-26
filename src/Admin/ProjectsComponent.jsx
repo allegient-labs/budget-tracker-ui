@@ -6,6 +6,9 @@ import { API_URL } from "../commonVars";
 import EditPeopleCard from "../RoutesCRUD/People/EditPeopleCard";
 import CreateProject from "./CreateProject";
 import { Button, Image, List } from "semantic-ui-react";
+import history from "../history";
+import EnhancedCUDModal from "../utils/EnhancedCUDModal";
+import ProjectForm from "../utils/ProjectForm";
 
 class ProjectsComponent extends Component {
   constructor() {
@@ -106,6 +109,9 @@ class ProjectsComponent extends Component {
         <div className="thing">
           <h3>Select a Project</h3>
           <CreateProject thingName="Project" createF={this.createThing} />
+          <EnhancedCUDModal crudType="create">
+            <ProjectForm submitAction={this.createThing} />
+          </EnhancedCUDModal>
           {this.state.things.length ? (
             this.state.things.map((thing, i) => {
               return (
@@ -121,7 +127,9 @@ class ProjectsComponent extends Component {
                       <Button
                         color="blue"
                         icon="arrow circle right"
-                        onClick={this.selectPerson.bind(this, thing)}
+                        onClick={() => {
+                          history.push("/admin/projects/" + thing.id);
+                        }}
                       />
                     </div>
                   </div>

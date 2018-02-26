@@ -24,7 +24,7 @@ import ProjectsContainer from "./Admin/containers/ProjectsContainer";
 import SingleProjectContainer from "./Admin/containers/SingleProjectContainer";
 import ClientsContainer from "./Admin/containers/ClientsContainer";
 import SingleClientContainer from "./Admin/containers/SingleClientContainer";
-import SingleUserAssignmentsContainer from "./Admin/containers/SingleUserAssignmentsContainer";
+import SingleAssignmentContainer from "./Admin/containers/SingleAssignmentContainer";
 import HolidaysComponent from "./Admin/HolidaysComponent";
 import ProfileComponent from "./MyInfo/ProfileComponent";
 import OffsComponent from "./MyInfo/OffsComponent";
@@ -87,24 +87,19 @@ class App extends Component {
               <Route exact path="/admin/persons" component={PersonsContainer} />
               <Route
                 exact
-                path="/admin/persons/singleperson/:id"
+                path="/admin/persons/:personId"
                 component={SinglePersonContainer}
               />
 
               <Route
                 exact
-                path="/admin/persons/singleperson"
-                component={SinglePersonContainer}
-              />
-              <Route
-                exact
-                path="/admin/persons/singleperson/assignments"
-                component={SingleUserAssignmentsContainer}
+                path="/admin/assignments/:assignmentId"
+                component={SingleAssignmentContainer}
               />
               <Route exact path="/admin/clients" component={ClientsContainer} />
               <Route
                 exact
-                path="/admin/clients/singleclient"
+                path="/admin/clients/:clientId"
                 component={SingleClientContainer}
               />
               <Route
@@ -114,7 +109,7 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/admin/projects/singleproject"
+                path="/admin/projects/:projectId"
                 component={SingleProjectContainer}
               />
               <Route

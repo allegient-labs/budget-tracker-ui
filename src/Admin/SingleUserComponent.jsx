@@ -4,54 +4,147 @@ import { Button } from "semantic-ui-react";
 import EditPeopleCard from "./EditPeopleCard";
 import AddAssignmentCard from "./AddAssignmentCard";
 import history from "../history.jsx";
-import EnhancedCUDModal from '../EnhancedCUDModal'
-import PersonCard from '../PersonCard'
+import EnhancedCUDModal from '../utils/EnhancedCUDModal'
+import PersonForm from '../utils/PersonForm'
+import PersonAssignmentForm from '../utils/PersonAssignmentForm'
+import {API_URL} from '../commonVars'
 class SingleUserComponent extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {selectedUser:{}, assignments:[], index:0};
 
     this.updateThing = this.updateThing.bind(this);
+    this.submitThing=this.submitThing.bind(this)
   }
 
+  componentDidMount(){
+    axios.get(API_URL+'/persons/'+this.props.match.params.personId)
+    .then((res)=>{this.setState({selectedUser:res.data})})
+
+    this.getAssignments()
+  }
+
+  getAssignments(){
+    /*Future reference, project and client data should be
+    *pre-loaded
+    */
+    const id = this.props.match.params.personId
+    if(id){
+      axios.get(API_URL+'/assignments/search/findByPersonId?person_id='+id)
+      .then((res)=>{
+        if(res.data){
+          const assignments = res.data._embedded.assignments
+          assignments.map((assignment, i)=>{
+            return axios.get(assignment._links.project.href)
+            .then((res)=>{
+              const project = res.data
+              axios.get(project._links.client.href)
+              .then(res=>{
+                const client = res.data
+                assignment.project=project
+                assignment.client=client
+                this.setState({index:i})
+                return assignment
+              })
+            })
+          })
+          this.setState({assignments:assignments})
+        }
+      })
+    }
+  } 
+
+  submitThing(form){
+    axios.post(API_URL+'/assignments', form)
+    .then((assignment)=>{
+      const arr1 = [assignment.data._links.person.href, assignment.data._links.project.href, assignment.data._links.practice.href]
+      const arr2 = [this.state.selectedUser._links.self.href, form.projectURI, form.practiceURI]
+      axios({
+          method: 'put',
+          url: arr1[0],
+          data: arr2[0],
+          headers:{'Content-Type':'text/uri-list'}
+        })
+      .then((res)=>{
+        console.log(arr1[1], arr2[1])
+        return axios({
+          method: 'put',
+          url: arr1[1],
+          data: arr2[1],
+          headers:{'Content-Type':'text/uri-list'}
+        })
+      })
+      .then((res)=>{
+        return axios({
+          method: 'put',
+          url: arr1[2],
+          data: arr2[2],
+          headers:{'Content-Type':'text/uri-list'}
+        })
+      })
+      .then(()=>{
+        this.getAssignments()
+        this.setState({modalOpen:false,
+          name:"",
+          showEdit:false,
+          practices:[],
+          projects:[],
+          allocation:"",
+          billrate:"",
+          ForecastAllocation:"",
+          notes:"",
+          role:"",
+          startDate:0,
+          endDate:0,
+          selectedProjectURI:"",
+          selectedPracticeURI:""})
+        
+      })
+      .catch((err)=>{console.log(err)})
+    })
+  }
+
+
   updateThing(payload) {
-    axios.put(this.props.selectedUser._links.self.href, payload).then(res => {
+    axios.put(this.state.selectedUser._links.self.href, payload).then(res => {
       this.props.setSelectedUser(payload);
     });
   }
 
   render() {
     return (
-      <div>
-        {this.props.selectedUser.name ? (
           <div>
             <div className="thingCard">
               <h3>Selected Person:</h3>
               <div className="info">
                 <div className="people">
-                  <h3>{this.props.selectedUser.name}</h3>
+                  <h3>{this.state.selectedUser.name}</h3>
                 </div>
               </div>
               <div className="buttons">
                 <EnhancedCUDModal crudType="edit">
-                  <PersonCard submitAction={this.updateThing}/>
-                </EnhancedCUDModal>                
+                  <PersonForm submitAction={this.updateThing}/>
+                </EnhancedCUDModal> 
               </div>
             </div>
-            <Button
-              color="yellow"
-              onClick={() => {
-                history.push("/admin/users/singleuser/assignments");
-              }}
-            >
-              See this person's assignments
-            </Button>
-            <AddAssignmentCard person={this.props.selectedUser} />
+            <br/>
+            <div>
+              <h3>Current Assignments</h3>
+              <EnhancedCUDModal crudType="create" thingName="Assignment">
+                <PersonAssignmentForm person={this.state.selectedUser} getAssignments={this.getAssignments} submitAction={this.submitThing}/>
+              </EnhancedCUDModal>                 
+              {this.state.assignments.map((asmt, i)=>{
+                return (<div key={i} className="thingCard"><h3>Role: {asmt.role} - Project: {asmt.project?asmt.project.name:null} - Client: {asmt.client?asmt.client.name:null}</h3><Button
+                        color="blue"
+                        icon="arrow circle right"
+                        onClick={()=>{history.push('/admin/assignments/'+asmt.id)}}
+                      /></div>)
+              })}
+            </div>
           </div>
-        ) : null}
-      </div>
     );
   }
 }
 
 export default SingleUserComponent;
+
