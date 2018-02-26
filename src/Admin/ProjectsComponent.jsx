@@ -7,7 +7,7 @@ import EditPeopleCard from "../RoutesCRUD/People/EditPeopleCard";
 import CreateProject from "./CreateProject";
 import { Button, Image, List } from "semantic-ui-react";
 import history from "../history";
-import EnhancedCUDModal from "../utils/EnhancedCUDModal";
+import EnhancedCreateModal from "../utils/EnhancedCreateModal";
 import ProjectForm from "../utils/ProjectForm";
 
 class ProjectsComponent extends Component {
@@ -22,8 +22,7 @@ class ProjectsComponent extends Component {
       prevURL: "",
       modalOpen: false
     };
-    this.deleteThing = this.deleteThing.bind(this);
-    this.updateThing = this.updateThing.bind(this);
+
     this.createThing = this.createThing.bind(this);
     this.getThings = this.getThings.bind(this);
     this.showDeletes = this.showDeletes.bind(this);
@@ -34,9 +33,7 @@ class ProjectsComponent extends Component {
   }
 
   getThings(url) {
-    const nav_url = url ? url.href : API_URL + "/projects";
-
-    axios.get(nav_url).then(things => {
+    axios.get(API_URL + "/projects").then(things => {
       this.setState({
         totalPages: things.data.page.totalPages,
         currPageNo: things.data.page.number,
@@ -67,32 +64,20 @@ class ProjectsComponent extends Component {
     this.getThings(this.state.prevURL);
   }
 
-  deleteThing(url, closeFunc) {
-    axios.delete(url.href).then(res => {
+  createThing(payload, selectedDropdownURI) {
+    const nav_url =  API_URL + "/projects";
+    axios.post(nav_url, payload)
+    .then(res => {
+      axios({
+            method: "put",
+            url: res.data._links.client.href,
+            data: selectedDropdownURI,
+            headers: { "Content-Type": "text/uri-list" }
+          })
+    })
+    .then(() => {
       this.getThings();
     });
-    closeFunc();
-  }
-
-  updateThing(url, closeFunc, payload) {
-    axios.put(url.href, payload).then(res => {
-      this.getThings();
-    });
-    closeFunc();
-  }
-
-  createThing(url, closeFunc, payload, assocationCallback) {
-    const nav_url = url ? url.href : API_URL + "/projects";
-
-    axios
-      .post(nav_url, payload)
-      .then(res => {
-        assocationCallback(res.data._links.client.href);
-      })
-      .then(() => {
-        this.getThings();
-      });
-    closeFunc();
   }
 
   selectPerson(thing) {
@@ -108,10 +93,9 @@ class ProjectsComponent extends Component {
       <div>
         <div className="thing">
           <h3>Select a Project</h3>
-          <CreateProject thingName="Project" createF={this.createThing} />
-          <EnhancedCUDModal crudType="create">
+          <EnhancedCreateModal>
             <ProjectForm submitAction={this.createThing} />
-          </EnhancedCUDModal>
+          </EnhancedCreateModal>
           {this.state.things.length ? (
             this.state.things.map((thing, i) => {
               return (

@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Button, Dropdown } from "semantic-ui-react";
-import EditProjectCard from "./EditProjectCard";
-import { API_URL } from "../commonVars";
-import EnhancedCUDModal from "../utils/EnhancedCUDModal";
-import ProjectForm from "../utils/ProjectForm";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Button, Dropdown } from 'semantic-ui-react';
+import EditProjectCard from './EditProjectCard';
+import { API_URL } from '../commonVars';
+import EnhancedUpdateModal from '../utils/EnhancedUpdateModal';
+import EnhancedDeleteModal from '../utils/EnhancedDeleteModal';
+import ProjectForm from '../utils/ProjectForm';
 class SingleProjectComponent extends Component {
   constructor() {
     super();
@@ -13,7 +14,7 @@ class SingleProjectComponent extends Component {
       showEdit: false,
       clients: [],
       clientsDropDown: [],
-      selectedDropdownURI: "",
+      selectedDropdownURI: '',
       linkedClient: {}
     };
     this.getClients = this.getClients.bind(this);
@@ -30,7 +31,7 @@ class SingleProjectComponent extends Component {
 
   getProject() {
     axios
-      .get(API_URL + "/projects/" + this.props.match.params.projectId)
+      .get(API_URL + '/projects/' + this.props.match.params.projectId)
       .then(res => {
         this.setState({ selectedProject: res.data }, this.getClientRelation);
       });
@@ -49,7 +50,7 @@ class SingleProjectComponent extends Component {
   }
 
   getClients() {
-    axios.get(API_URL + "/clients").then(clients => {
+    axios.get(API_URL + '/clients').then(clients => {
       this.setState({ clients: clients.data._embedded.clients }, () => {
         var arr = [];
         this.state.clients.map((client, i) => {
@@ -69,11 +70,12 @@ class SingleProjectComponent extends Component {
       .put(this.state.selectedProject._links.self.href, payload)
       .then(res => {
         const clientURI = res.data._links.client.href;
+        this.setState({ selectedProject: res.data });
         axios({
-          method: "put",
+          method: 'put',
           url: clientURI,
           data: selectedDropdownURI,
-          headers: { "Content-Type": "text/uri-list" }
+          headers: { 'Content-Type': 'text/uri-list' }
         }).then(() => {
           axios
             .get(clientURI)
@@ -106,17 +108,17 @@ class SingleProjectComponent extends Component {
               <br />
             </div>
             <div className="buttons">
-              <EnhancedCUDModal crudType="edit">
+              <EnhancedUpdateModal crudType="edit">
                 <ProjectForm
                   clientsDropDown={this.state.clientsDropDown}
                   linkedClient={this.state.linkedClient}
                   thing={this.state.selectedProject}
                   submitAction={this.updateProject}
                 />
-              </EnhancedCUDModal>
-              <EnhancedCUDModal crudType="delete">
+              </EnhancedUpdateModal>
+              <EnhancedDeleteModal crudType="delete">
                 <ProjectForm />
-              </EnhancedCUDModal>
+              </EnhancedDeleteModal>
             </div>
           </div>
         ) : (

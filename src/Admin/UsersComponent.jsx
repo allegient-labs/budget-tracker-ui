@@ -5,7 +5,7 @@ import CreateButton from "../RoutesCRUD/Utils/CreateButton";
 import DeleteButton from "../RoutesCRUD/Utils/DeleteButton";
 import { API_URL } from "../commonVars";
 import EditPeopleCard from "../RoutesCRUD/People/EditPeopleCard";
-import EnhancedCUDModal from "../utils/EnhancedCUDModal";
+import EnhancedCreateModal from "../utils/EnhancedCreateModal";
 import PersonForm from "../utils/PersonForm";
 import history from "../history";
 
@@ -74,9 +74,9 @@ class UsersComponent extends Component {
       <div>
         <div className="thing">
           <h3>Select a Person</h3>
-          <EnhancedCUDModal crudType="create">
+          <EnhancedCreateModal>
             <PersonForm submitAction={this.createPerson} />
-          </EnhancedCUDModal>
+          </EnhancedCreateModal>
           {this.state.things.length ? (
             this.state.things.map((thing, i) => {
               return (
