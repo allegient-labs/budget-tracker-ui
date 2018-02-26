@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
+import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 /**
  *This component enables the inclusion of certain modal properties by props and passes modal close handler to children
  *
- *props: crudType, thingName, action
+ *props: thingName
  */
 class EnhancedDeleteModal extends React.Component {
   constructor() {
@@ -25,7 +25,6 @@ class EnhancedDeleteModal extends React.Component {
   }
 
   render() {
-    const type = this.props.crudType;
     const thingName = this.props.thingName ? this.props.thingName : 'Item';
     const triggerButtonColor = 'red';
     const triggerButtonText = 'Delete';

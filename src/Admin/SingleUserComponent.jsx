@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Button } from 'semantic-ui-react';
-import EditPeopleCard from './EditPeopleCard';
-import AddAssignmentCard from './AddAssignmentCard';
 import history from '../history.jsx';
 import EnhancedUpdateModal from '../utils/EnhancedUpdateModal';
 import EnhancedCreateModal from '../utils/EnhancedCreateModal';
 import PersonForm from '../utils/PersonForm';
 import PersonAssignmentForm from '../utils/PersonAssignmentForm';
 import { API_URL } from '../commonVars';
+
 class SingleUserComponent extends Component {
   constructor() {
     super();

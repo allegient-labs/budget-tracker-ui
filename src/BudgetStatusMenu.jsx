@@ -1,13 +1,17 @@
-import React, { Component } from "react";
-import { Input, Label, Menu, Icon, Button } from "semantic-ui-react";
+import React, { Component } from 'react';
+import { Label, Menu, Icon, Button } from 'semantic-ui-react';
 
-export default class MenuExampleSizeVerticalLarge extends Component {
-  state = { activeItem: "inbox", menuClosed: true };
+export default class BudgetStatusMenu extends Component {
+  state = { activeItem: 'inbox', menuClosed: true };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   handleClose = () => {
     this.setState({ menuClosed: !this.state.menuClosed });
+  };
+
+  static _meta = {
+    name: 'BudgetStatusMenu'
   };
 
   render() {
@@ -25,7 +29,7 @@ export default class MenuExampleSizeVerticalLarge extends Component {
             </Menu.Item>
             <Menu.Item
               name="inbox"
-              active={activeItem === "inbox"}
+              active={activeItem === 'inbox'}
               onClick={this.handleItemClick}
             >
               <Label color="teal">9</Label>
@@ -34,7 +38,7 @@ export default class MenuExampleSizeVerticalLarge extends Component {
 
             <Menu.Item
               name="spam"
-              active={activeItem === "spam"}
+              active={activeItem === 'spam'}
               onClick={this.handleItemClick}
             >
               <Label>99</Label>
@@ -43,7 +47,7 @@ export default class MenuExampleSizeVerticalLarge extends Component {
 
             <Menu.Item
               name="updates"
-              active={activeItem === "updates"}
+              active={activeItem === 'updates'}
               onClick={this.handleItemClick}
             >
               <Label>1</Label>

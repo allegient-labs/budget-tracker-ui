@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button } from 'semantic-ui-react';
-import history from '../history.jsx';
-import { API_URL } from '../commonVars';
 import EnhancedUpdateModal from '../utils/EnhancedUpdateModal';
 import EnhancedDeleteModal from '../utils/EnhancedDeleteModal';
 import PersonAssignmentForm from '../utils/PersonAssignmentForm';

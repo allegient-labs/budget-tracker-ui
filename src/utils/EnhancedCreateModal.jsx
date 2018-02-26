@@ -1,10 +1,10 @@
-import React from "react";
-import { Button, Header, Icon, Modal, Form } from "semantic-ui-react";
+import React from 'react';
+import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 /**
-*This component enables the inclusion of certain modal properties by props and passes modal close handler to children
-*
-*props: crudType, thingName, action
-*/
+ *This component enables the inclusion of certain modal properties by props and passes modal close handler to children
+ *
+ *props: thingName
+ */
 class EnhancedCreateModal extends React.Component {
   constructor() {
     super();
@@ -25,20 +25,20 @@ class EnhancedCreateModal extends React.Component {
   }
 
   render() {
-    const type = this.props.crudType
-    const thingName = this.props.thingName?this.props.thingName:"Item"
-    const triggerButtonColor = "green"
-    const triggerButtonText = "Add"
-    const triggerButtonIcon = "plus"
-    const inModalText = "Create "+thingName
-    const inModalIcon = "add circle"
-    
+    const thingName = this.props.thingName ? this.props.thingName : 'Item';
+    const triggerButtonColor = 'green';
+    const triggerButtonText = 'Add';
+    const triggerButtonIcon = 'plus';
+    const inModalText = 'Create ' + thingName;
+    const inModalIcon = 'add circle';
+
     const children = this.props.children;
     return (
       <Modal
         trigger={
           <Button color={triggerButtonColor} onClick={this.handleOpen}>
-            {triggerButtonIcon?<Icon name={triggerButtonIcon}/>:null}{triggerButtonText}
+            {triggerButtonIcon ? <Icon name={triggerButtonIcon} /> : null}
+            {triggerButtonText}
           </Button>
         }
         onClose={this.handleClose}
@@ -47,7 +47,9 @@ class EnhancedCreateModal extends React.Component {
         size="small"
       >
         <Header icon={inModalIcon} content={inModalText} />
-        {children?React.cloneElement(children, {handleClose: this.handleClose}):null}
+        {children
+          ? React.cloneElement(children, { handleClose: this.handleClose })
+          : null}
         <Modal.Actions>
           <Button onClick={this.handleClose} basic color="red" inverted>
             <Icon name="close" /> Cancel

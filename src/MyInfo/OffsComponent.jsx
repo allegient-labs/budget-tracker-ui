@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Button } from "semantic-ui-react";
-import history from "../history";
-import { withRouter } from "react-router-dom";
-import EnhancedCreateModal from '../utils/EnhancedCreateModal'
-import CalendarCard from '../utils/CalendarCard'
+import React, { Component } from 'react';
+import { Button } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+import EnhancedCreateModal from '../utils/EnhancedCreateModal';
+import CalendarCard from '../utils/CalendarCard';
 
 class OffsComponent extends Component {
   constructor() {
@@ -19,12 +17,12 @@ class OffsComponent extends Component {
           color="blue"
           icon="arrow circle left"
           onClick={() => {
-            this.props.history.push("/myinfo");
+            this.props.history.push('/myinfo');
           }}
         />
         <h3>OffsComponent</h3>
         <EnhancedCreateModal>
-          <CalendarCard/>
+          <CalendarCard />
         </EnhancedCreateModal>
       </div>
     );

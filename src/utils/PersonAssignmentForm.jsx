@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, Header, Icon, Modal, Form, Dropdown } from 'semantic-ui-react';
+import { Button, Icon, Form, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import { API_URL } from '../commonVars';
-import history from '../history.jsx';
 
 //requires a thing prop, an updateF prop, a thingName prop
 class AddAssignmentCard extends React.Component {

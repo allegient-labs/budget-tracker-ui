@@ -1,14 +1,11 @@
-import React, { Component } from "react";
-import logo from "./DMI_Logo.svg";
-import { NavLink, Link } from "react-router-dom";
-import { Menu, Button, Icon } from "semantic-ui-react";
-import Breadcrumb from "./Breadcrumb";
-import BudgetStatusMenu from "./BudgetStatusMenu";
+import React, { Component } from 'react';
+import logo from './DMI_Logo.svg';
+import { NavLink } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react';
+import Breadcrumb from './Breadcrumb';
+import BudgetStatusMenu from './BudgetStatusMenu';
 
 class UtilityHeader extends Component {
-  constructor() {
-    super();
-  }
   render() {
     return (
       <div className="App-header">

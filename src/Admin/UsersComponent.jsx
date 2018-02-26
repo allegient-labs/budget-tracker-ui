@@ -1,13 +1,10 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Button } from "semantic-ui-react";
-import CreateButton from "../RoutesCRUD/Utils/CreateButton";
-import DeleteButton from "../RoutesCRUD/Utils/DeleteButton";
-import { API_URL } from "../commonVars";
-import EditPeopleCard from "../RoutesCRUD/People/EditPeopleCard";
-import EnhancedCreateModal from "../utils/EnhancedCreateModal";
-import PersonForm from "../utils/PersonForm";
-import history from "../history";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Button } from 'semantic-ui-react';
+import { API_URL } from '../commonVars';
+import EnhancedCreateModal from '../utils/EnhancedCreateModal';
+import PersonForm from '../utils/PersonForm';
+import history from '../history';
 
 class UsersComponent extends Component {
   constructor() {
@@ -17,8 +14,8 @@ class UsersComponent extends Component {
       currPageNo: 0,
       totalPages: 0,
       isNext: false,
-      nextURL: "",
-      prevURL: "",
+      nextURL: '',
+      prevURL: '',
       modalOpen: false
     };
 
@@ -30,13 +27,13 @@ class UsersComponent extends Component {
   }
 
   getThings(url) {
-    const nav_url = url ? url.href : API_URL + "/persons";
+    const nav_url = url ? url.href : API_URL + '/persons';
 
     axios.get(nav_url).then(things => {
       this.setState({
         totalPages: things.data.page.totalPages,
         currPageNo: things.data.page.number,
-        things: things.data._embedded["person"],
+        things: things.data._embedded['person'],
         nextURL: things.data._links.next,
         prevURL: things.data._links.prev
       });
@@ -56,7 +53,7 @@ class UsersComponent extends Component {
   }
 
   createPerson(payload) {
-    axios.post(API_URL + "/persons", payload).then(res => {
+    axios.post(API_URL + '/persons', payload).then(res => {
       this.getThings();
     });
   }
@@ -94,7 +91,7 @@ class UsersComponent extends Component {
                           color="blue"
                           icon="arrow circle right"
                           onClick={() => {
-                            history.push("./persons/" + thing.id);
+                            history.push('./persons/' + thing.id);
                           }}
                         />
                       )}
