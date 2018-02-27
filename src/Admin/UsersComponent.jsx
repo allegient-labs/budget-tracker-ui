@@ -5,6 +5,7 @@ import { API_URL } from '../commonVars';
 import EnhancedCreateModal from '../utils/EnhancedCreateModal';
 import PersonForm from '../utils/PersonForm';
 import history from '../history';
+import { adalApiFetch, adalApiUpdate } from '../adalConfig';
 
 class UsersComponent extends Component {
   constructor() {
@@ -29,7 +30,7 @@ class UsersComponent extends Component {
   getThings(url) {
     const nav_url = url ? url.href : API_URL + '/persons';
 
-    axios.get(nav_url).then(things => {
+    adalApiFetch(axios.get, nav_url, {}).then(things => {
       this.setState({
         totalPages: things.data.page.totalPages,
         currPageNo: things.data.page.number,
@@ -53,7 +54,7 @@ class UsersComponent extends Component {
   }
 
   createPerson(payload) {
-    axios.post(API_URL + '/persons', payload).then(res => {
+    adalApiUpdate(axios.post, API_URL + '/persons', payload, {}).then(res => {
       this.getThings();
     });
   }

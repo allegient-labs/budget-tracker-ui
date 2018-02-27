@@ -5677,6 +5677,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-adal@^0.3.15:
+  version "0.3.15"
+  resolved "https://registry.yarnpkg.com/react-adal/-/react-adal-0.3.15.tgz#d015818c86b6952a7824fae690e3164918c3aca6"
+
 react-big-calendar@^0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/react-big-calendar/-/react-big-calendar-0.18.0.tgz#7a05735367289995023245b7b41c27d443cae54c"

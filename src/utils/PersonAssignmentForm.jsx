@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Icon, Form, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import { API_URL } from '../commonVars';
+import { adalApiFetch } from '../adalConfig';
 
 //requires a thing prop, an updateF prop, a thingName prop
 class AddAssignmentCard extends React.Component {
@@ -34,7 +35,7 @@ class AddAssignmentCard extends React.Component {
   }
 
   getProjects() {
-    axios.get(API_URL + '/projects?size=100').then(res => {
+    adalApiFetch(axios.get, API_URL + '/projects?size=100', {}).then(res => {
       const projects = res.data._embedded.project;
       const builtDropdown = projects.map((project, i) => {
         return { key: i, text: project.name, value: project._links.self.href };
@@ -44,7 +45,7 @@ class AddAssignmentCard extends React.Component {
   }
 
   getPractices() {
-    axios.get(API_URL + '/practices?size=50').then(res => {
+    adalApiFetch(axios.get, API_URL + '/practices?size=50', {}).then(res => {
       const practices = res.data._embedded.practices;
       const builtDropdown = practices.map((practice, i) => {
         return {
