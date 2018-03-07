@@ -4,6 +4,7 @@ import { API_URL } from '../commonVars';
 import EnhancedUpdateModal from '../utils/EnhancedUpdateModal';
 import EnhancedDeleteModal from '../utils/EnhancedDeleteModal';
 import ProjectForm from '../utils/ProjectForm';
+import { adalApiFetch, adalApiUpdate } from '../adalConfig';
 class SingleProjectComponent extends Component {
   constructor() {
     super();
@@ -28,17 +29,18 @@ class SingleProjectComponent extends Component {
   }
 
   getProject() {
-    axios
-      .get(API_URL + '/projects/' + this.props.match.params.projectId)
-      .then(res => {
-        this.setState({ selectedProject: res.data }, this.getClientRelation);
-      });
+    adalApiFetch(
+      axios.get,
+      API_URL + '/projects/' + this.props.match.params.projectId,
+      {}
+    ).then(res => {
+      this.setState({ selectedProject: res.data }, this.getClientRelation);
+    });
   }
 
   getClientRelation() {
     const clientURI = this.state.selectedProject._links.client.href;
-    axios
-      .get(clientURI)
+    adalApiFetch(axios.get, clientURI, {})
       .then(client => {
         this.setState({ linkedClient: client.data });
       })
@@ -48,7 +50,7 @@ class SingleProjectComponent extends Component {
   }
 
   getClients() {
-    axios.get(API_URL + '/clients').then(clients => {
+    adalApiFetch(axios.get, API_URL + '/clients', {}).then(clients => {
       this.setState({ clients: clients.data._embedded.clients }, () => {
         var arr = [];
         this.state.clients.map((client, i) => {
@@ -64,27 +66,26 @@ class SingleProjectComponent extends Component {
   }
 
   updateProject(payload, selectedDropdownURI) {
-    axios
-      .put(this.state.selectedProject._links.self.href, payload)
-      .then(res => {
-        const clientURI = res.data._links.client.href;
-        this.setState({ selectedProject: res.data });
-        axios({
-          method: 'put',
-          url: clientURI,
-          data: selectedDropdownURI,
-          headers: { 'Content-Type': 'text/uri-list' }
-        }).then(() => {
-          axios
-            .get(clientURI)
-            .then(client => {
-              this.setState({ linkedClient: client.data });
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        });
+    adalApiUpdate(
+      axios.put,
+      this.state.selectedProject._links.self.href,
+      payload,
+      {}
+    ).then(res => {
+      const clientURI = res.data._links.client.href;
+      this.setState({ selectedProject: res.data });
+      adalApiUpdate(axios.put, clientURI, selectedDropdownURI, {
+        headers: { 'Content-Type': 'text/uri-list' }
+      }).then(() => {
+        adalApiFetch(axios.get, clientURI, {})
+          .then(client => {
+            this.setState({ linkedClient: client.data });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       });
+    });
   }
 
   changeHandler(evt, selection) {

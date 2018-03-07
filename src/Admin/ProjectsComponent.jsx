@@ -5,6 +5,7 @@ import { Button } from 'semantic-ui-react';
 import history from '../history';
 import EnhancedCreateModal from '../utils/EnhancedCreateModal';
 import ProjectForm from '../utils/ProjectForm';
+import { adalApiFetch, adalApiUpdate } from '../adalConfig';
 
 class ProjectsComponent extends Component {
   constructor() {
@@ -29,7 +30,7 @@ class ProjectsComponent extends Component {
   }
 
   getThings(url) {
-    axios.get(API_URL + '/projects').then(things => {
+    adalApiFetch(axios.get, API_URL + '/projects', {}).then(things => {
       this.setState({
         totalPages: things.data.page.totalPages,
         currPageNo: things.data.page.number,
@@ -62,15 +63,16 @@ class ProjectsComponent extends Component {
 
   createThing(payload, selectedDropdownURI) {
     const nav_url = API_URL + '/projects';
-    axios
-      .post(nav_url, payload)
+    adalApiUpdate(axios.post, nav_url, payload, {})
       .then(res => {
-        axios({
-          method: 'put',
-          url: res.data._links.client.href,
-          data: selectedDropdownURI,
-          headers: { 'Content-Type': 'text/uri-list' }
-        });
+        adalApiUpdate(
+          axios.put,
+          res.data._links.client.href,
+          selectedDropdownURI,
+          {
+            headers: { 'Content-Type': 'text/uri-list' }
+          }
+        );
       })
       .then(() => {
         this.getThings();

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Icon, Modal, Form, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import { API_URL } from '../commonVars';
+import { adalApiFetch } from '../adalConfig';
 /**
  *This component enables the inclusion of certain modal properties by props and passes modal close handler to children
  *
@@ -47,7 +48,7 @@ class ProjectForm extends React.Component {
   }
 
   getClients() {
-    axios.get(API_URL + '/clients').then(clients => {
+    adalApiFetch(axios.get, API_URL + '/clients', {}).then(clients => {
       this.setState({ clients: clients.data._embedded.clients }, () => {
         var arr = [];
         this.state.clients.map((client, i) => {

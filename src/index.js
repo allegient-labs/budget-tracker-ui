@@ -1,10 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import 'semantic-ui-css/semantic.min.css';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import 'react-datepicker/dist/react-datepicker.css';
+import { runWithAdal } from 'react-adal';
+import { authContext } from './adalConfig';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+runWithAdal(authContext, () => {
+  //eslint-disable-next-line
+  require('./indexApp.js');
+});

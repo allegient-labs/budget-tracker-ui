@@ -3,6 +3,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import { API_URL } from '../commonVars';
 import axios from 'axios';
+import { adalApiFetch } from '../adalConfig';
 
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
@@ -31,20 +32,22 @@ class HolidaysComponent extends Component {
   }
 
   componentDidMount() {
-    axios.get(API_URL + '/holidays?size=1000').then(holidays => {
-      const fromDataHolidays = holidays.data._embedded.holidays;
-      const calHolidays = fromDataHolidays.map((holiday, i) => {
-        return {
-          id: i,
-          title: holiday.descr,
-          allDay: true,
-          color: 'green',
-          start: new Date(holiday.date),
-          end: new Date(holiday.date)
-        };
-      });
-      this.setState({ events: calHolidays });
-    });
+    adalApiFetch(axios.get, API_URL + '/holidays?size=1000', {}).then(
+      holidays => {
+        const fromDataHolidays = holidays.data._embedded.holidays;
+        const calHolidays = fromDataHolidays.map((holiday, i) => {
+          return {
+            id: i,
+            title: holiday.descr,
+            allDay: true,
+            color: 'green',
+            start: new Date(holiday.date),
+            end: new Date(holiday.date)
+          };
+        });
+        this.setState({ events: calHolidays });
+      }
+    );
   }
 
   render() {

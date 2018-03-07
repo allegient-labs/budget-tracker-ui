@@ -7,6 +7,7 @@ import EnhancedCreateModal from '../utils/EnhancedCreateModal';
 import PersonForm from '../utils/PersonForm';
 import PersonAssignmentForm from '../utils/PersonAssignmentForm';
 import { API_URL } from '../commonVars';
+import { adalApiFetch, adalApiUpdate } from '../adalConfig';
 
 class SingleUserComponent extends Component {
   constructor() {
@@ -23,11 +24,13 @@ class SingleUserComponent extends Component {
   }
 
   getPerson() {
-    axios
-      .get(API_URL + '/persons/' + this.props.match.params.personId)
-      .then(res => {
-        this.setState({ selectedUser: res.data });
-      });
+    adalApiFetch(
+      axios.get,
+      API_URL + '/persons/' + this.props.match.params.personId,
+      {}
+    ).then(res => {
+      this.setState({ selectedUser: res.data });
+    });
 
     this.getAssignments();
   }
@@ -38,91 +41,97 @@ class SingleUserComponent extends Component {
     */
     const id = this.props.match.params.personId;
     if (id) {
-      axios
-        .get(API_URL + '/assignments/search/findByPersonId?person_id=' + id)
-        .then(res => {
-          if (res.data) {
-            const assignments = res.data._embedded.assignments;
-            assignments.map((assignment, i) => {
-              return axios.get(assignment._links.project.href).then(res => {
-                const project = res.data;
-                axios.get(project._links.client.href).then(res => {
+      adalApiFetch(
+        axios.get,
+        API_URL + '/persons/' + this.props.match.params.personId,
+        {}
+      ).then(res => {
+        if (res.data) {
+          const assignments = res.data._embedded.assignments;
+          assignments.map((assignment, i) => {
+            return adalApiFetch(
+              axios.get,
+              assignment._links.project.href,
+              {}
+            ).then(res => {
+              const project = res.data;
+              adalApiFetch(axios.get, project._links.client.href, {}).then(
+                res => {
                   const client = res.data;
                   assignment.project = project;
                   assignment.client = client;
                   this.setState({ index: i });
                   return assignment;
-                });
-              });
+                }
+              );
             });
-            this.setState({ assignments: assignments });
-          }
-        });
+          });
+          this.setState({ assignments: assignments });
+        }
+      });
     }
   }
 
   submitThing(form) {
-    axios.post(API_URL + '/assignments', form).then(assignment => {
-      const arr1 = [
-        assignment.data._links.person.href,
-        assignment.data._links.project.href,
-        assignment.data._links.practice.href
-      ];
-      const arr2 = [
-        this.state.selectedUser._links.self.href,
-        form.projectURI,
-        form.practiceURI
-      ];
+    adalApiUpdate(axios.post, API_URL + '/assignments', form, {}).then(
+      assignment => {
+        const arr1 = [
+          assignment.data._links.person.href,
+          assignment.data._links.project.href,
+          assignment.data._links.practice.href
+        ];
+        const arr2 = [
+          this.state.selectedUser._links.self.href,
+          form.projectURI,
+          form.practiceURI
+        ];
 
-      axios({
-        method: 'put',
-        url: arr1[0],
-        data: arr2[0],
-        headers: { 'Content-Type': 'text/uri-list' }
-      })
-        .then(res => {
-          return axios({
-            method: 'put',
-            url: arr1[1],
-            data: arr2[1],
-            headers: { 'Content-Type': 'text/uri-list' }
-          });
+        adalApiUpdate(axios.put, arr1[0], arr2[0], {
+          headers: { 'Content-Type': 'text/uri-list' }
         })
-        .then(res => {
-          return axios({
-            method: 'put',
-            url: arr1[2],
-            data: arr2[2],
-            headers: { 'Content-Type': 'text/uri-list' }
+          .then(res => {
+            return adalApiUpdate(axios.put, arr1[1], arr2[1], {
+              headers: { 'Content-Type': 'text/uri-list' }
+            });
+          })
+          .then(res => {
+            return adalApiUpdate(axios.put, arr1[2], arr2[2], {
+              headers: { 'Content-Type': 'text/uri-list' }
+            });
+          })
+          .then(() => {
+            this.getAssignments();
+            this.setState({
+              modalOpen: false,
+              name: '',
+              showEdit: false,
+              practices: [],
+              projects: [],
+              allocation: '',
+              billrate: '',
+              ForecastAllocation: '',
+              notes: '',
+              role: '',
+              startDate: 0,
+              endDate: 0,
+              selectedProjectURI: '',
+              selectedPracticeURI: ''
+            });
+          })
+          .catch(err => {
+            console.log(err);
           });
-        })
-        .then(() => {
-          this.getAssignments();
-          this.setState({
-            modalOpen: false,
-            name: '',
-            showEdit: false,
-            practices: [],
-            projects: [],
-            allocation: '',
-            billrate: '',
-            ForecastAllocation: '',
-            notes: '',
-            role: '',
-            startDate: 0,
-            endDate: 0,
-            selectedProjectURI: '',
-            selectedPracticeURI: ''
-          });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    });
+      }
+    );
   }
 
   updateThing(payload) {
-    axios.put(this.state.selectedUser._links.self.href, payload).then(res => {
+    adalApiUpdate(
+      axios.put,
+      this.state.selectedUser._links.self.href,
+      payload,
+      {}
+    ).then(res => {
       this.getPerson();
     });
   }

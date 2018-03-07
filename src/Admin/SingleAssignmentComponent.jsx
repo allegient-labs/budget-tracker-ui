@@ -3,6 +3,7 @@ import axios from 'axios';
 import EnhancedUpdateModal from '../utils/EnhancedUpdateModal';
 import EnhancedDeleteModal from '../utils/EnhancedDeleteModal';
 import PersonAssignmentForm from '../utils/PersonAssignmentForm';
+import { adalApiDelete, adalApiFetch, adalApiUpdate } from '../adalConfig';
 
 class SingleUserComponent extends Component {
   constructor() {
@@ -24,69 +25,90 @@ class SingleUserComponent extends Component {
   }
 
   getAssignment() {
-    axios
-      .get(
-        'http://localhost:8080/assignments/search/findById?id=' +
-          this.props.match.params.assignmentId
-      )
-      .then(asmt => {
-        this.setState({ assignment: asmt.data });
-        axios.get(asmt.data._links.person.href).then(person => {
-          this.setState({ asmtPerson: person.data });
-        });
-        axios.get(asmt.data._links.practice.href).then(practice => {
-          this.setState({ asmtPractice: practice.data });
-        });
-        axios.get(asmt.data._links.project.href).then(project => {
-          this.setState({ asmtProject: project.data });
-        });
+    adalApiFetch(
+      axios.get,
+      'http://localhost:8080/assignments/search/findById?id=' +
+        this.props.match.params.assignmentId,
+      {}
+    ).then(asmt => {
+      this.setState({ assignment: asmt.data });
+      adalApiFetch(axios.get, asmt.data._links.person.href, {}).then(person => {
+        this.setState({ asmtPerson: person.data });
       });
+      adalApiFetch(axios.get, asmt.data._links.practice.href, {}).then(
+        practice => {
+          this.setState({ asmtPractice: practice.data });
+        }
+      );
+      adalApiFetch(axios.get, asmt.data._links.practice.href, {}).then(
+        project => {
+          this.setState({ asmtProject: project.data });
+        }
+      );
+    });
   }
 
   handleDelete() {
-    axios.delete(this.state.assignment._links.self.href).then(() => {
+    adalApiDelete(
+      axios.delete,
+      this.state.assignment._links.self.href,
+      {}
+    ).then(() => {
       this.setState({ assignment: {}, message: 'Assignment deleted' });
     });
   }
 
   editAssignment(payload) {
-    axios.put(this.state.assignment._links.self.href, payload).then(res => {
+    adalApiUpdate(
+      axios.put,
+      this.state.assignment._links.self.href,
+      payload,
+      {}
+    ).then(res => {
       if (payload.practiceURI && payload.projectURI) {
-        axios({
-          method: 'put',
-          url: res.data._links.practice.href,
-          data: payload.practiceURI,
-          headers: { 'Content-Type': 'text/uri-list' }
-        })
+        adalApiUpdate(
+          axios.put,
+          res.data._links.practice.href,
+          payload.practiceURI,
+          {
+            headers: { 'Content-Type': 'text/uri-list' }
+          }
+        )
           .then(() => {
-            return axios({
-              method: 'put',
-              url: res.data._links.project.href,
-              data: payload.projectURI,
-              headers: { 'Content-Type': 'text/uri-list' }
-            });
+            return adalApiUpdate(
+              axios.put,
+              res.data._links.project.href,
+              payload.projectURI,
+              {
+                headers: { 'Content-Type': 'text/uri-list' }
+              }
+            );
           })
           .then(() => {
             this.getAssignment();
           });
       }
       if (payload.practiceURI && !payload.projectURI) {
-        axios({
-          method: 'put',
-          url: res.data._links.practice.href,
-          data: payload.practiceURI,
-          headers: { 'Content-Type': 'text/uri-list' }
-        }).then(() => {
+        adalApiUpdate(
+          axios.put,
+          res.data._links.practice.href,
+          payload.practiceURI,
+          {
+            headers: { 'Content-Type': 'text/uri-list' }
+          }
+        ).then(() => {
           this.getAssignment();
         });
       }
       if (payload.projectURI && !payload.practiceURI) {
-        axios({
-          method: 'put',
-          url: res.data._links.project.href,
-          data: payload.projectURI,
-          headers: { 'Content-Type': 'text/uri-list' }
-        }).then(() => {
+        adalApiUpdate(
+          axios.put,
+          res.data._links.project.href,
+          payload.projectURI,
+          {
+            headers: { 'Content-Type': 'text/uri-list' }
+          }
+        ).then(() => {
           this.getAssignment();
         });
       }

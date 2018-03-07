@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from 'semantic-ui-react';
 import { API_URL } from '../commonVars';
 import history from '../history';
+import { adalApiDelete, adalApiFetch, adalApiUpdate } from '../adalConfig';
 
 class ClientsComponent extends Component {
   constructor() {
@@ -27,7 +28,7 @@ class ClientsComponent extends Component {
   getThings(url) {
     const nav_url = API_URL + '/clients';
 
-    axios.get(nav_url).then(things => {
+    adalApiFetch(axios.get, nav_url, {}).then(things => {
       this.setState({
         totalPages: things.data.page.totalPages,
         currPageNo: things.data.page.number,
@@ -51,14 +52,14 @@ class ClientsComponent extends Component {
   }
 
   deleteThing(url, closeFunc) {
-    axios.delete(url.href).then(res => {
+    adalApiDelete(axios.del, url.href, {}).then(res => {
       this.getThings();
     });
     closeFunc();
   }
 
   updateThing(url, closeFunc, payload) {
-    axios.put(url.href, payload).then(res => {
+    adalApiUpdate(axios.put, url.href, payload, {}).then(res => {
       this.getThings();
     });
     closeFunc();
@@ -67,7 +68,7 @@ class ClientsComponent extends Component {
   createThing(url, closeFunc, payload) {
     const nav_url = url ? url.href : API_URL + '/clients';
 
-    axios.post(nav_url, payload).then(res => {
+    adalApiUpdate(axios.post, nav_url, payload, {}).then(res => {
       this.getThings();
     });
     closeFunc();
